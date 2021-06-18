@@ -15,17 +15,13 @@ There are two aspects to defining functions:
 In sanctuary there's a convenient way of defining the processing steps - the `pipe` function. `pipe` takes a list of functions and it passes the output value of one function as the input value into the following function. See [Piping - reduce the number of intermediate variables](#Piping - reduce the number of intermediate variables) for more information:
 
 ```javascript
-const myfunction = parameter1 => S.pipe([
-  doA,
-  doB,
-  doC,
-])(parameter1);
+const myfunction = (parameter1) => S.pipe([doA, doB, doC])(parameter1);
 ```
 
 For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checking functionality the function signature needs to be defined the sanctuary way:
 
 ```javascript
-const myfunction = TODO
+const myfunction = TODO;
 ```
 
 ## Type definition
@@ -35,7 +31,7 @@ const myfunction = TODO
 Functions often contain a lot of calls to other functions. The intermediate values of the function calls are stored in variables are passed again to other function calls. It might look something like this:
 
 ```javascript
-const myfunction = parameter1 => parameter2 => parameter3 => {
+const myfunction = (parameter1) => (parameter2) => (parameter3) => {
   const resA = doA(parameter1);
   const resB = doB(parameter2)(resA);
   const resC = doC(parameter3)(resB);
@@ -46,11 +42,8 @@ const myfunction = parameter1 => parameter2 => parameter3 => {
 This could be optimized with the `S.pipe` function by removing the variables and feeding the intermediate results directly into the next function:
 
 ```javascript
-const myfunction = parameter1 => parameter2 => parameter3 => S.pipe([
-  doA,
-  doB(parameter2),
-  doC(parameter3),
-])(parameter1);
+const myfunction = (parameter1) => (parameter2) => (parameter3) =>
+  S.pipe([doA, doB(parameter2), doC(parameter3)])(parameter1);
 ```
 
 ## Print Debugging - inspecting intermediate values
@@ -60,27 +53,18 @@ The goal of print debugging is to peek into a function execution chain and learn
 Example, given the following function - how to inspect the return value of `doA`?
 
 ```javascript
-const myfunction = S.pipe([
-  doA,
-  doB,
-  doC,
-]);
+const myfunction = S.pipe([doA, doB, doC]);
 ```
 
 Solution, define a `log` function that prints a message and the received value and returns the value. Then add the log function between `doA` and `doB`:
 
 ```javascript
-const log = msg => value => {
+const log = (msg) => (value) => {
   console.log(msg, value);
   return value;
-}
+};
 
-const myfunction = S.pipe([
-  doA,
-  log("Return value of doA:"),
-  doB,
-  doC,
-]);
+const myfunction = S.pipe([doA, log("Return value of doA:"), doB, doC]);
 ```
 
 ## Branching - handling if-else cases
@@ -88,7 +72,7 @@ const myfunction = S.pipe([
 In a function there is often the need to handle two cases differently:
 
 ```javascript
-const myfunction = parameter1 => {
+const myfunction = (parameter1) => {
   const res = computeSomething(parameter1);
   if (res > 0) {
     return doA(res);
@@ -101,25 +85,23 @@ const myfunction = parameter1 => {
 In sanctuary it could be done as follows:
 
 ```javascript
-const myfunction = parameter1 => S.pipe([
-  computeSomething,
-  S.ifElse(res => res > 0)(doA)(doB),
-])(parameter1);
+const myfunction = (parameter1) =>
+  S.pipe([computeSomething, S.ifElse((res) => res > 0)(doA)(doB)])(parameter1);
 ```
 
 This could get ugly if there are more cases that need to be distinguished, e.g. `res < 0`, `res < 10` and `res >= 10`:
 
 ```javascript
-const myfunction = parameter1 => S.pipe([
-  computeSomething,
-  S.ifElse(res => res > 0)(S.ifElse(res => res < 10)(doA)(doC))(doB),
-])(parameter1);
+const myfunction = (parameter1) =>
+  S.pipe([
+    computeSomething,
+    S.ifElse((res) => res > 0)(S.ifElse((res) => res < 10)(doA)(doC))(doB),
+  ])(parameter1);
 ```
 
 In this case it might be easier to ...?
 
 ## Promises
-
 
 ## Error handling
 
@@ -131,7 +113,7 @@ There are these two different functions, `map` and `chain`, that look very simil
 
 ```javascript
 const numbers = [1, 2, 3];
-const add = number1 => number2 => number1 + number2;
+const add = (number1) => (number2) => number1 + number2;
 S.map(add(1))(numbers);
 
 // [2, 3, 4]
@@ -140,8 +122,8 @@ S.map(add(1))(numbers);
 In addition, something like a `Pair` or a `Promise` could also be a Functor. In this case `map` maps over the value, e.g. the result of a `Promise` or the value of a `Pair`.
 
 ```javascript
-const pair = S.Pair('a')(1);
-const add = number1 => number2 => number1 + number2;
+const pair = S.Pair("a")(1);
+const add = (number1) => (number2) => number1 + number2;
 S.map(add(1))(pair);
 
 // Pair ("a") (2)
@@ -154,8 +136,8 @@ However, sometimes this is intelligence of putting the returned value back in a 
 ```javascript
 S.pipe([
   S.parseInt(10),
-  S.map(S.ifElse(v => v > 10)(S.Just)(v => S.Nothing)),
-])('100')
+  S.map(S.ifElse((v) => v > 10)(S.Just)((v) => S.Nothing)),
+])("100");
 
 // Just (Just (100))
 ```
@@ -165,8 +147,8 @@ There are now two nested `Just` data types. As you can see from the implementati
 ```javascript
 S.pipe([
   S.parseInt(10),
-  S.chain(S.ifElse(v => v > 10)(S.Just)(v => S.Nothing)),
-])('100')
+  S.chain(S.ifElse((v) => v > 10)(S.Just)((v) => S.Nothing)),
+])("100");
 
 // Just (100)
 ```
@@ -181,7 +163,10 @@ S.pipe([
 
 ## Other great resources
 
-- [Prof. Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
-- EggHead, ...
-- https://github.com/fantasyland/fantasy-land
-- https://github.com/sanctuary-js/sanctuary-type-classes
+- Functional programming introduction: [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
+- Functional programming Fantasy Land Spec walkthrough: [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/)
+- Functional programming video tutorial series: [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/lessons/javascript-you-ve-been-using-monads)
+- Functional programming book: [Prof. Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
+- Functional programming book: [Compsing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
+- Sanctuary library introduction: [Sanctuary, Programming Safely in an Uncertain World](https://www.youtube.com/watch?v=a2astdDbOjk)
+- Sanctuary type class overview: [Sanctuary Type Classes](https://github.com/sanctuary-js/sanctuary-type-classes) and [Fantasy Land Specification](https://github.com/fantasyland/fantasy-land)
