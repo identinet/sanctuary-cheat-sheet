@@ -367,6 +367,14 @@ S.pipe([
 
 ## filter
 
+When composing function calls with [`pipe`][pipe] it's common that arrays of values are processed. [`map`][map] is great for transforming array elements with the help of other functions. However, sometimes the list of array elemets needs to be reduced before processing them further. For example, `null` values or [`Nothing`][nothing] values need to be removed or numbers that are lower than a certain threshold. This can be easily done with [`filter`][filter] that takes a predicate / filter function:
+
+```javascript
+S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
+
+// [ 4, 5 ]
+```
+
 ## reduce
 
 ## key-value - Pair
