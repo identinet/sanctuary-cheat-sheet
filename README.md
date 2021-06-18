@@ -1,6 +1,6 @@
-# Sanctuary Cheat Sheet
+![](https://img.shields.io/endpoint?url=https://github.com/identinet/sanctuary-cheat-sheet/?style=for-the-badge?label=Work-in-Progress?color=yellow)
 
-WARNING: the article is work in progress
+# Sanctuary Cheat Sheet
 
 The goal of this cheat sheet is to make it easy for newcomers and experienced developers to work with the [Sanctuary library](https://sanctuary.js.org/) by describing common patterns and best practices.
 
@@ -14,7 +14,7 @@ There are three aspects to defining functions:
 1. Define the processing steps
 1. Define the function signature with types
 
-### Define the parameters
+### Define parameters - gimme, gimme, gimme!
 
 In functional programming functions are usually curried. This means that a function only takes one parameter. If a function requires more than one parameter it should be defined as a function that takes one parameter and returns a functional that requires another parameter.
 
@@ -26,7 +26,7 @@ const myfunction = (parameter1) => (parameter2) => (parameter3) => {
 };
 ```
 
-### Define the processing steps
+### Define processing steps - getting things done
 
 In sanctuary there's a convenient way of defining the processing steps - the [`pipe`][pipe] function. [`pipe`][pipe] takes a list of functions and it passes the output value of one function as the input value into the following function. See [Piping](#piping---connecting-function-outputs-to-function-inputs-and-avoid-intermediate-variables) for more information:
 
@@ -42,7 +42,7 @@ const myfunction = (parameter1) =>
   ])(parameter1);
 ```
 
-### Define the function signature with types
+### Define function signature with types - type-safety first
 
 For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checking functionality the function signature needs to be defined the sanctuary way. Take a look at the [built-in types](https://github.com/sanctuary-js/sanctuary-def#types):
 
@@ -63,7 +63,7 @@ def ('add')                           // name
     (x => y => x + y);                // implementation
 ```
 
-## Type definition
+## Type definition - create your own functional types
 
 The types that can be used by functions need to be first defined. Sanctuary has a number of constructors for defining types. Take a look at sanctuary's [Type constructors](https://github.com/sanctuary-js/sanctuary-def#type-constructors). Here is a very simple one that defines an integer. Keep in mind that a documentation URL is required where more information can be found about the type - the project's `REAMDE.md` is a good place to keep the type definition documentation at:
 
@@ -187,7 +187,7 @@ const myfunction = (parameter1) => {
 };
 ```
 
-In [Sanctuary](https://sanctuary.js.org/) it could be done as follows:
+In [Sanctuary](https://sanctuary.js.org/) it could be done with the [`ifElse`][ifelse] function as follows:
 
 ```javascript
 const myfunction = (parameter1) =>
@@ -210,7 +210,7 @@ const myfunction = (parameter1) =>
 
 In this case it might be easier to TODO ...?
 
-## Promises
+## Promises - back to the Future
 
 [Sanctuary](https://sanctuary.js.org/) doesn't provide special handling for [`Promises`][promise]. However, since they're used all over the place in JavaScript it would be great to deal with them in a functional way. There's a functional [`Promises`][promise] library for this: [Fluture](https://github.com/fluture-js/Fluture)
 
@@ -241,11 +241,11 @@ fork(
 )(attemptP(() => Promise.resolve(42)));
 ```
 
-### Call a promise-returning function
+### Promises - working with Promise-returning functions
 
-There are two main helper functions by Fluture to deal with [`Promises`][promise]: [`attemptP`][attpemtp] and [`encaseP`][encasep].
+There are two main helper functions by Fluture to deal with [`Promises`][promise]: [`attemptP`][attemptp] and [`encaseP`][encasep].
 
-[`attemptP`][attpemtp] takes a function that doesn't take a parameter and turns it into a [`Future`][future], e.g.:
+[`attemptP`][attemptp] takes a function that doesn't take a parameter and turns it into a [`Future`][future], e.g.:
 
 ```javascript
 attemptP(() => Promise.resolve(42));
@@ -257,7 +257,7 @@ attemptP(() => Promise.resolve(42));
 encaseP(fetch)("https://api.github.com/users/Avaq");
 ```
 
-### Processing Futures
+### Processing - the Future is yet to come
 
 The main question is how do we deal with Futures in [`pipe`][pipe]. There are two important cases to keep in mind: [map or chain?](#map-or-chain). Either we process the Future with [`map`][map] (2) - in this case no knowledge about the Future is required by the function that receives the value - or with [`map`][map] (3) - in this case the Future is consumed and a new future needs to be returned by the function.
 
@@ -282,6 +282,7 @@ fork(log("rejection"))(log("resolution"))(
 TODO
 
 - parallel
+- cancel
 
 ## Error handling
 
@@ -295,7 +296,7 @@ TODO
 
 There are these two different functions, [`map`][map] and [`chain`][chain], that look very similar. However, using one over the other is sometimes advantageous.
 
-### map
+### map - transform a list of values
 
 [`map`][map] is defined by the [`Functor` class type](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy). Every [`Functor`][functor] implements [`map`][map]. [`Functors`][functor] are often arrays and [`map`][map] maps a function over every element of the array. Example, add `1` to every element in an array of numbers:
 
@@ -319,7 +320,7 @@ S.map(add(1))(pair);
 
 As you can see in the example, the `add` doesn't concern itself with the inner workings of the data type but just operates on the value. [`map`][map] does the heavy lifting of getting the [`Functors`][functor] value out and wrapping the modified value back in a [`Functor`][functor]. This is very convenient because it makes functions easily applicable to all kinds of [`Functors`][functor].
 
-### chain
+### chain - perform type-aware transformation of values
 
 However, sometimes this is intelligence of putting the returned value back in a [`Functor`][functor] works against us. For example, we want to parse an integer from string but only want to return a [`Just`][just] value if the integer is greater than 10 otherwise [`Nothing`][nothing]. If we tried to do this with [`map`][map] we'd end up with this result:
 
@@ -343,7 +344,7 @@ S.pipe([
 // Just (100)
 ```
 
-### join
+### join - combine multiple objects of the same type
 
 If you receive a value that's wrapped twice in the same type we can use [`join`][join] to remove one layer of wrapping:
 
@@ -369,7 +370,7 @@ S.pipe([
 // Nothing
 ```
 
-## filter
+## filter - remove unneeded values
 
 When composing function calls with [`pipe`][pipe] it's common that arrays of values are processed. [`map`][map] is great for transforming array elements with the help of other functions. However, sometimes the list of array elemets needs to be reduced before processing them further. For example, `null` values or [`Nothing`][nothing] values need to be removed or numbers that are lower than a certain threshold. This can be easily done with [`filter`][filter] that takes a predicate / filter function:
 
@@ -379,9 +380,9 @@ S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
 // [ 4, 5 ]
 ```
 
-## reduce
+## reduce - accumulate values
 
-In the same way as [filter](#filter), [`reduce`][reduce] operates on an array of values and transforms + collects them into an accumulated new value (this concept is so powerful [`map`][map] and [`filter`][filter] can be expressed with [`reduce`][reduce] .. but it is more difficult to understand. We'll stick to the accumulation feature here). For example, the values of the array could be summed up:
+In the same way as [`filter`][filter], [`reduce`][reduce] operates on an array of values and transforms + collects them into an accumulated new value (this concept is so powerful [`map`][map] and [`filter`][filter] can be expressed with [`reduce`][reduce] .. but it is more difficult to understand. We'll stick to the accumulation feature here). For example, the values of the array could be summed up:
 
 ```javascript
 S.reduce((acc) => (x) => acc + x)(0)([1, 2, 3, 4, 5]);
@@ -393,7 +394,7 @@ S.reduce((acc) => (x) => acc + x)(0)([1, 2, 3, 4, 5]);
 
 TODO
 
-## Read-Eval-Print-Loop
+## Read-Eval-Print-Loop - try out Sanctuary
 
 A web-based [Sanctuary](https://sanctuary.js.org/)-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green">green</span> box.
 
@@ -416,7 +417,7 @@ let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
 
 Unfortunately, there's no faster option yet, see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
 
-## Libraries
+## Libraries - little helpers
 
 - Sanctuary - Refuge from unsafe JavaScript: [Sanctuary](https://sanctuary.js.org/)
 - Sanctuary type class overview: [Sanctuary Type Classes](https://github.com/sanctuary-js/sanctuary-type-classes) and [Fantasy Land Specification](https://github.com/fantasyland/fantasy-land)
@@ -424,7 +425,7 @@ Unfortunately, there's no faster option yet, see [[Feature Request] CLI option f
 - Fluture - Fantasy Land compliant (monadic) alternative to Promises: [Fluture](https://github.com/fluture-js/Fluture)
 - Most - Monadic stream for reactive programming: [Most](https://github.com/cujojs/most)
 
-## Other great resources
+## Resources - addiontal things that might be helpful
 
 - Sanctuary library introduction: [Sanctuary, Programming Safely in an Uncertain World](https://www.youtube.com/watch?v=a2astdDbOjk)
 - Introduction to functional programming: [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
@@ -440,6 +441,7 @@ Unfortunately, there's no faster option yet, see [[Feature Request] CLI option f
 [fork]: https://github.com/fluture-js/Fluture#fork
 [functor]: https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy
 [future]: https://github.com/fluture-js/Fluture#future
+[ifelse]: https://sanctuary.js.org/#ifElse
 [join]: https://sanctuary.js.org/#join
 [just]: https://sanctuary.js.org/#Just
 [map]: https://sanctuary.js.org/#map
