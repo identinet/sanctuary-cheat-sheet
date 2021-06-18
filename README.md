@@ -291,7 +291,7 @@ fork(log("rejection"))(log("resolution"))(
 
 There are these two different functions, [`map`](https://sanctuary.js.org/#map) and [`chain`](https://sanctuary.js.org/#chain), that look very similar. However, using one over the other is sometimes advantageous.
 
-[`map`](https://sanctuary.js.org/#map) is defined by the [`Functor` class type](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy). Every [`Functor`](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy) implements [`map`](https://sanctuary.js.org/#map). [`Functors`](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy) are often arrays and [`map`](https://sanctuary.js.org/#map) maps a function over every element of the array. Example, add `1` to every element in an array:
+[`map`](https://sanctuary.js.org/#map) is defined by the [`Functor` class type](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy). Every [`Functor`](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy) implements [`map`](https://sanctuary.js.org/#map). [`Functors`](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy) are often arrays and [`map`](https://sanctuary.js.org/#map) maps a function over every element of the array. Example, add `1` to every element in an array of numbers:
 
 ```javascript
 const numbers = [1, 2, 3];
