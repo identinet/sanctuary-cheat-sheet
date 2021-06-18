@@ -377,6 +377,7 @@ S.pipe([
 - Sanctuary type class overview: [Sanctuary Type Classes](https://github.com/sanctuary-js/sanctuary-type-classes) and [Fantasy Land Specification](https://github.com/fantasyland/fantasy-land)
 - Sanctuary type overview: [sanctuary-def](https://github.com/sanctuary-js/sanctuary-def)
 - Fluture - Fantasy Land compliant (monadic) alternative to Promises: [Fluture](https://github.com/fluture-js/Fluture)
+- Most - Monadic stream for reactive programming: [Most](https://github.com/cujojs/most)
 
 ## Other great resources
 
