@@ -328,7 +328,7 @@ S.pipe([
 // Just (Just (100))
 ```
 
-There are now two nested [`Just`][just] data types. As you can see from the implementation, the function that's called by [`map`][map]already uses the complex data type [`Pair`][pair] (implemented by [`Just`][just] and [`Nothing`][nothing]). Therefore, if since we pass a [`Pair`][pair] into the function and the function returns a [`Pair`][pair], we don't need[`map`][map]'s feature of wrapping the returned value in the passed in [`Functor`][functor]. [`chain`][chain] as defined by the Chain class type does exactly that, it expects the function to properly wrap the return value in the [`Functor`][functor]. This is important when working with [`Promises`][promise] to ensure that we're not wrapping an unresolved [`Promise`][promise] inside a resolved [`Promise`][promise] but return the unresolved [`Promise`][promise] so we can wait upon its completion:
+There are now two nested [`Just`][just] data types. As you can see from the implementation, the function that's called by [`map`][map]already uses the complex data type [`Pair`][pair] (implemented by [`Just`][just] and [`Nothing`][nothing]). Therefore, if since we pass a [`Pair`][pair] into the function and the function returns a [`Pair`][pair], we don't need[`map`][map]'s feature of wrapping the returned value in the passed in [`Functor`][functor]. [`chain`][chain] as defined by the Chain class type does exactly that, it expects the function to properly wrap the return value in the [`Functor`][functor]. This is important when working with [`Promises`][promise] to ensure that we're not wrapping an unresolved [`Promise`][promise] inside a resolved [`Promise`][promise] but return the unresolved [`Promise`][promise] so we can wait for its completion:
 
 ```javascript
 S.pipe([
@@ -367,7 +367,7 @@ S.pipe([
 
 ## filter
 
-## or reduce
+## reduce
 
 ## key-value - Pair
 
