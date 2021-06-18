@@ -12,8 +12,9 @@ There are three aspects to defining functions:
 
 1. Define the parameters - one after the other
 1. Define the processing steps
-1. Define the function signature types
+1. Define the function signature with types
 
+### Define the parameters
 In functional programming functions are usually curried. This means that a function only takes one parameter. If a function requires more than one parameter it should be defined as a function that takes one parameter and returns a functional that requires another parameter.
 
 Fortunately, JavaScript's arrow functions make it really easy to create curried functions:
@@ -24,11 +25,15 @@ const myfunction = (parameter1) => (parameter2) => (parameter3) => {
 };
 ```
 
+### Define the processing steps
+
 In sanctuary there's a convenient way of defining the processing steps - the `pipe` function. `pipe` takes a list of functions and it passes the output value of one function as the input value into the following function. See [Piping - reduce the number of intermediate variables](#Piping - reduce the number of intermediate variables) for more information:
 
 ```javascript
 const myfunction = (parameter1) => S.pipe([doA, doB, doC])(parameter1);
 ```
+
+### Define the function signature with types
 
 For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checking functionality the function signature needs to be defined the sanctuary way. Take a look at the [built-in types](https://github.com/sanctuary-js/sanctuary-def#types):
 
@@ -186,7 +191,7 @@ const myfunction = (parameter1) =>
   ])(parameter1);
 ```
 
-In this case it might be easier to ...?
+In this case it might be easier to TODO ...?
 
 ## Promises
 
