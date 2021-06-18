@@ -171,10 +171,11 @@ In a function there is often the need to handle two cases differently:
 const myfunction = (parameter1) => {
   const res = computeSomething(parameter1);
   if (res > 0) {
-    return doA(res);
+    doA(res);
   } else {
-    return doB(res);
+    doB(res);
   }
+  // further processing
 };
 ```
 
@@ -182,7 +183,11 @@ In sanctuary it could be done as follows:
 
 ```javascript
 const myfunction = (parameter1) =>
-  S.pipe([computeSomething, S.ifElse((res) => res > 0)(doA)(doB)])(parameter1);
+  S.pipe([
+    computeSomething,
+    S.ifElse((res) => res > 0)(doA)(doB),
+    // further processing
+  ])(parameter1);
 ```
 
 This could get ugly if there are more cases that need to be distinguished, e.g. `res < 0`, `res < 10` and `res >= 10`:
@@ -198,6 +203,26 @@ const myfunction = (parameter1) =>
 In this case it might be easier to TODO ...?
 
 ## Promises
+
+Sanctuary doesn't provide special handling for promises. However, since
+they're used all over the place in JavaScript it would be great to deal
+with them in a functional way.
+
+```javascript
+const myfunction = S.pipe([
+  do1,
+  do2,
+  do3,
+  do4,
+  do5,
+  do6,
+  do7,
+  do8,
+  do9,
+  do10,
+  do11,
+]);
+```
 
 ## Error handling
 
