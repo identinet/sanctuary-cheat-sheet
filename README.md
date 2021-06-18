@@ -4,13 +4,25 @@ WARNING: the article is work in progress
 
 The goal of this cheat sheet is to make it easy for newcomers and experienced developers to work with the [Sanctuary library](https://sanctuary.js.org/) by describing common patterns and best practices.
 
+[toc]
+
 ## Function definition
 
-There are two aspects to defining functions:
+There are three aspects to defining functions:
 
+1. Define the parameters - one after the other
 1. Define the processing steps
-2. Define the function signature, including types
-3. Define the parameters - one after the other TODO ...
+1. Define the function signature types
+
+In functional programming functions are usually curried. This means that a function only takes one parameter. If a function requires more than one parameter it should be defined as a function that takes one parameter and returns a functional that requires another parameter.
+
+Fortunately, JavaScript's arrow functions make it really easy to create curried functions:
+
+```javascript
+const myfunction = (parameter1) => (parameter2) => (parameter3) => {
+  // the function body
+};
+```
 
 In sanctuary there's a convenient way of defining the processing steps - the `pipe` function. `pipe` takes a list of functions and it passes the output value of one function as the input value into the following function. See [Piping - reduce the number of intermediate variables](#Piping - reduce the number of intermediate variables) for more information:
 
@@ -18,15 +30,30 @@ In sanctuary there's a convenient way of defining the processing steps - the `pi
 const myfunction = (parameter1) => S.pipe([doA, doB, doC])(parameter1);
 ```
 
-For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checking functionality the function signature needs to be defined the sanctuary way:
+For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checkingfunctionality the function signature needs to be defined the sanctuaryway. Take a look at the [built-in types](https://github.com/sanctuary-js/sanctuary-def):
 
 ```javascript
-const myfunction = TODO;
+// define a def function that makes it easy to create functions with
+type checks
+const $ = require("sanctuary-def");
+const def = $.create({
+  checkTypes: process.env.NODE_ENV === "development",
+  env,
+});
+
+//    add :: Number -> Number -> Number
+const add =
+def ('add')                           // name
+    ({})                              // type-class constraints
+    ([$.Number, $.Number, $.Number])  // input and output types
+    (x => y => x + y);                // implementation
 ```
 
 ## Type definition
 
-## Piping - reduce the number of intermediate variables
+TODO
+
+## Piping - avoid intermediate variables
 
 Functions often contain a lot of calls to other functions. The intermediate values of the function calls are stored in variables are passed again to other function calls. It might look something like this:
 
@@ -170,3 +197,4 @@ S.pipe([
 - Functional programming book: [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
 - Fantasy Land Spec walkthrough: [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/)
 - Sanctuary type class overview: [Sanctuary Type Classes](https://github.com/sanctuary-js/sanctuary-type-classes) and [Fantasy Land Specification](https://github.com/fantasyland/fantasy-land)
+- Sanctuary type overview: [sanctuary-def](https://github.com/sanctuary-js/sanctuary-def)
