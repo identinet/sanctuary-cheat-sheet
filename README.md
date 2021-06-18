@@ -196,7 +196,7 @@ This could get ugly if there are more cases that need to be distinguished, e.g. 
 const myfunction = (parameter1) =>
   S.pipe([
     computeSomething,
-    S.ifElse((res) => res > 0)(S.ifElse((res) => res < 10)(doA)(doC))(doB),
+    S.ifElse((res) => res < 0)(doB)(S.ifElse((res) => res < 10)(doA))(doC),
   ])(parameter1);
 ```
 
