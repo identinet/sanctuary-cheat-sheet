@@ -70,7 +70,7 @@ const Integer = $.NullaryType("Integer")(
 );
 ```
 
-## Piping - connecting function output to function input and avoid intermediate variables
+## Piping - connecting function outputs to function inputs and avoid intermediate variables
 
 Functions often contain a lot of calls to other functions. The intermediate values of the function calls are stored in variables are passed again to other function calls. It might look something like this:
 
@@ -79,6 +79,13 @@ const myfunction = (parameter1) => (parameter2) => (parameter3) => {
   const resA = doA(parameter1);
   const resB = doB(parameter2)(resA);
   const resC = doC(parameter3)(resB);
+  const resD = doD(resC);
+  const resE = doE(resD);
+  const resF = doF(resE);
+  const resG = doG(resF);
+  const resH = doH(resG);
+  const resI = doI(resH);
+  const resJ = doJ(resI);
   return resC;
 };
 ```
@@ -87,20 +94,43 @@ This could be optimized with the `S.pipe` function by removing the variables and
 
 ```javascript
 const myfunction = (parameter1) => (parameter2) => (parameter3) =>
-  S.pipe([doA, doB(parameter2), doC(parameter3)])(parameter1);
+  S.pipe([
+    doA,
+    doB(parameter2),
+    doC(parameter3),
+    doD,
+    doE,
+    doF,
+    doG,
+    doH,
+    doI,
+    doJ,
+  ])(parameter1);
 ```
 
-## Print Debugging - inspecting intermediate values
+## Print debugging - inspecting intermediate values
 
 The goal of print debugging is to peek into a function execution chain and learn about intermediate results.
 
-Example, given the following function - how to inspect the return value of `doA`?
+Example, given the following function - how to inspect the return value of `do3`?
 
 ```javascript
-const myfunction = S.pipe([doA, doB, doC]);
+const myfunction = S.pipe([
+  do1,
+  do2,
+  do3,
+  do4,
+  do5,
+  do6,
+  do7,
+  do8,
+  do9,
+  do10,
+  do11,
+]);
 ```
 
-Solution, define a `log` function that prints a message and the received value and returns the value. Then add the log function between `doA` and `doB`:
+Solution, define a `log` function that prints a message and the received value and returns the value. Then add the log function between `do3` and `do4`:
 
 ```javascript
 const log = (msg) => (value) => {
@@ -108,7 +138,20 @@ const log = (msg) => (value) => {
   return value;
 };
 
-const myfunction = S.pipe([doA, log("Return value of doA:"), doB, doC]);
+const myfunction = S.pipe([
+  do1,
+  do2,
+  do3,
+  log("Return value of do3:"),
+  do4,
+  do5,
+  do6,
+  do7,
+  do8,
+  do9,
+  do10,
+  do11,
+]);
 ```
 
 ## Branching - handling if-else cases
