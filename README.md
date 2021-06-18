@@ -379,6 +379,25 @@ S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
 
 ## key-value - Pair
 
+## Read-Eval-Print-Loop
+
+To quickly get a [Sanctuary](https://sanctuary.js.org/) REPL use [Deno](https://deno.land/).
+
+```bash
+deno repl
+```
+
+Then run these commands to import [Sanctuary](https://sanctuary.js.org/) and [Fluture](https://github.com/fluture-js/Fluture):
+
+```javascipt
+// Sanctuary only:
+let S; import("https://cdn.skypack.dev/sanctuary").then(l => { S=l.default; });
+
+// Fluture + Sanctuary integration:
+import("https://cdn.skypack.dev/fluture-sanctuary-types").then(l => { S = S.create({    checkTypes: true,    env: S.env.concat(l.env),  }); });
+let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
+```
+
 ## Libraries
 
 - Sanctuary - Refuge from unsafe JavaScript: [Sanctuary](https://sanctuary.js.org/)
