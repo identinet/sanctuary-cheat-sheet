@@ -381,7 +381,7 @@ S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
 
 ## Read-Eval-Print-Loop
 
-To quickly get a [Sanctuary](https://sanctuary.js.org/) REPL use [Deno](https://deno.land/).
+To quickly get a [Sanctuary](https://sanctuary.js.org/) REPL and try out functions use [Deno](https://deno.land/):
 
 ```bash
 deno repl
