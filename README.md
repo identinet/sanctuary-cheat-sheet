@@ -30,7 +30,7 @@ In sanctuary there's a convenient way of defining the processing steps - the `pi
 const myfunction = (parameter1) => S.pipe([doA, doB, doC])(parameter1);
 ```
 
-For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checkingfunctionality the function signature needs to be defined the sanctuaryway. Take a look at the [built-in types](https://github.com/sanctuary-js/sanctuary-def):
+For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checking functionality the function signature needs to be defined the sanctuary way. Take a look at the [built-in types](https://github.com/sanctuary-js/sanctuary-def#types):
 
 ```javascript
 // define a def function that makes it easy to create functions with
@@ -51,9 +51,26 @@ def ('add')                           // name
 
 ## Type definition
 
-TODO
+The types that can be used by functions need to be first defined. Sanctuary has a number of constructors for defining types. Take a look at sanctuary's [Type constructors](https://github.com/sanctuary-js/sanctuary-def#type-constructors). Here is a very simple one that defines an integer. Keep in mind that a documentation URL is required where more information can be found about the type - the project's `REAMDE.md` is a good place to keep the type definition documentation at:
 
-## Piping - avoid intermediate variables
+```javascript
+const Integer = $.NullaryType("Integer")(
+  // name
+  "http://example.com/my-package#Integer"
+)(
+  // documentation URL
+  []
+)(
+  // supertypes
+  (x) =>
+    typeof x === "number" && // predicate values need to satisfy
+    Math.floor(x) === x &&
+    x >= Number.MIN_SAFE_INTEGER &&
+    x <= Number.MAX_SAFE_INTEGER
+);
+```
+
+## Piping - connecting function output to function input and avoid intermediate variables
 
 Functions often contain a lot of calls to other functions. The intermediate values of the function calls are stored in variables are passed again to other function calls. It might look something like this:
 
@@ -136,7 +153,7 @@ In this case it might be easier to ...?
 
 There are these two different functions, `map` and `chain`, that look very similar. However, using one over the other is sometimes advantageous.
 
-`map` is definied by the [Functor class type](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy). Every Functor implements `map`. Functors are often arrays and `map` maps a function over every element of the array. Example, add `1` to every element in an array:
+`map` is defined by the [Functor class type](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy). Every Functor implements `map`. Functors are often arrays and `map` maps a function over every element of the array. Example, add `1` to every element in an array:
 
 ```javascript
 const numbers = [1, 2, 3];
@@ -169,7 +186,7 @@ S.pipe([
 // Just (Just (100))
 ```
 
-There are now two nested `Just` data types. As you can see from the implementation, the function that's called by `map` already uses the complex data type `Pair` (implemeted by `Just` and `Nothing`). Therefore, if since we pass a `Pair` into the function and the function returns a `Pair`, we don't need `map`'s feature of wrapping the returned value in the passed in `Functor`. `chain` as defined by the Chain class type does exactly that, it expects the function to properly wrap the return value in the `Functor`. This is important when working with `Promises` to ensure that we're not wrapping an unresolved `Promise` inside a resolved `Promise` but return the unresolved `Promise` so we can wait upon its completion:
+There are now two nested `Just` data types. As you can see from the implementation, the function that's called by `map` already uses the complex data type `Pair` (implemented by `Just` and `Nothing`). Therefore, if since we pass a `Pair` into the function and the function returns a `Pair`, we don't need `map`'s feature of wrapping the returned value in the passed in `Functor`. `chain` as defined by the Chain class type does exactly that, it expects the function to properly wrap the return value in the `Functor`. This is important when working with `Promises` to ensure that we're not wrapping an unresolved `Promise` inside a resolved `Promise` but return the unresolved `Promise` so we can wait upon its completion:
 
 ```javascript
 S.pipe([
