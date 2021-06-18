@@ -398,6 +398,8 @@ import("https://cdn.skypack.dev/fluture-sanctuary-types").then(l => { S = S.crea
 let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
 ```
 
+Unfortunately, there's no faster option yet, see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
+
 ## Libraries
 
 - Sanctuary - Refuge from unsafe JavaScript: [Sanctuary](https://sanctuary.js.org/)
