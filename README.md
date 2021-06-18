@@ -279,9 +279,13 @@ fork(log("rejection"))(log("resolution"))(
 
 ### Lists of Futures
 
+TODO
+
 - parallel
 
 ## Error handling
+
+TODO
 
 - Maybe
 - Either
@@ -377,7 +381,17 @@ S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
 
 ## reduce
 
+In the same way as [filter](#filter), [`reduce`][reduce] operates on an array of values and transforms + collects them into an accumulated new value (this concept is so powerful [`map`][map] and [`filter`][filter] can be expressed with [`reduce`][reduce] .. but it is more difficult to understand. We'll stick to the accumulation feature here). For example, the values of the array could be summed up:
+
+```javascript
+S.reduce((acc) => (x) => acc + x)(0)([1, 2, 3, 4, 5]);
+
+// 15
+```
+
 ## key-value - Pair
+
+TODO
 
 ## Read-Eval-Print-Loop
 
