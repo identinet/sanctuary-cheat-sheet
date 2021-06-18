@@ -381,10 +381,12 @@ S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
 
 ## Read-Eval-Print-Loop
 
-To quickly get a [Sanctuary](https://sanctuary.js.org/) REPL and try out functions use [Deno](https://deno.land/):
+A web-based [Sanctuary](https://sanctuary.js.org/)-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green">green</span> box.
+
+To quickly get a local [Sanctuary](https://sanctuary.js.org/) REPL use [Deno](https://deno.land/):
 
 ```bash
-deno repl
+deno
 ```
 
 Then run these commands to import [Sanctuary](https://sanctuary.js.org/) and [Fluture](https://github.com/fluture-js/Fluture):
