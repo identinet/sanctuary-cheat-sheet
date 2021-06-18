@@ -15,6 +15,7 @@ There are three aspects to defining functions:
 1. Define the function signature with types
 
 ### Define the parameters
+
 In functional programming functions are usually curried. This means that a function only takes one parameter. If a function requires more than one parameter it should be defined as a function that takes one parameter and returns a functional that requires another parameter.
 
 Fortunately, JavaScript's arrow functions make it really easy to create curried functions:
@@ -59,16 +60,19 @@ def ('add')                           // name
 The types that can be used by functions need to be first defined. Sanctuary has a number of constructors for defining types. Take a look at sanctuary's [Type constructors](https://github.com/sanctuary-js/sanctuary-def#type-constructors). Here is a very simple one that defines an integer. Keep in mind that a documentation URL is required where more information can be found about the type - the project's `REAMDE.md` is a good place to keep the type definition documentation at:
 
 ```javascript
-const Integer = $.NullaryType("Integer")(
+const Integer = $.NullaryType(
   // name
-  "http://example.com/my-package#Integer"
+  "Integer"
 )(
   // documentation URL
-  []
+  "http://example.com/my-package#Integer"
 )(
   // supertypes
+  []
+)(
+  // predicate values need to satisfy
   (x) =>
-    typeof x === "number" && // predicate values need to satisfy
+    typeof x === "number" &&
     Math.floor(x) === x &&
     x >= Number.MIN_SAFE_INTEGER &&
     x <= Number.MAX_SAFE_INTEGER
