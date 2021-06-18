@@ -335,7 +335,31 @@ S.pipe([
 // Just (100)
 ```
 
-## join
+### join
+
+If you receive a value that's wrapped twice in the same type we can use [`join`][join] to remove one layer of wrapping:
+
+```javascript
+S.pipe([
+  S.parseInt(10),
+  S.map(S.ifElse((v) => v > 10)(S.Just)((v) => S.Nothing)),
+  S.join, // added join
+])("100");
+
+// Just (100)
+```
+
+Note that the added [`join`][join] plays nicely in case [`Nothing`][nothing] is returned by [`parseInt`][parseint]:
+
+```javascript
+S.pipe([
+  S.parseInt(10),
+  S.map(S.ifElse((v) => v > 10)(S.Just)((v) => S.Nothing)),
+  S.join, // added join
+])("invalid100");
+
+// Nothing
+```
 
 ## filter
 
