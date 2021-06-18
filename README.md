@@ -394,7 +394,7 @@ Then run these commands to import [Sanctuary](https://sanctuary.js.org/) and [Fl
 let S; import("https://cdn.skypack.dev/sanctuary").then(l => { S=l.default; });
 
 // Fluture + Sanctuary integration:
-import("https://cdn.skypack.dev/fluture-sanctuary-types").then(l => { S = S.create({    checkTypes: true,    env: S.env.concat(l.env),  }); });
+import("https://cdn.skypack.dev/fluture-sanctuary-types").then(l => { S = S.create({checkTypes: true, env: S.env.concat(l.env)}); });
 let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
 ```
 
