@@ -259,7 +259,7 @@ encaseP(fetch)("https://api.github.com/users/Avaq");
 
 ### Processing Futures
 
-The main question is how do we deal with Futures in [`pipe`](https://sanctuary.js.org/#pipe). There are two important cases to keep in mind: [map or chain?](#map-or-chain%3F). Either we process the Future with [`map`](https://sanctuary.js.org/#map) (2) - in this case no knowledge about the Future is required by the function that receives the value - or with [`map`](https://sanctuary.js.org/#chain) (3) - in this case the Future is consumed and a new future needs to be returned by the function.
+The main question is how do we deal with Futures in [`pipe`](https://sanctuary.js.org/#pipe). There are two important cases to keep in mind: [map or chain?](#map-or-chain). Either we process the Future with [`map`](https://sanctuary.js.org/#map) (2) - in this case no knowledge about the Future is required by the function that receives the value - or with [`map`](https://sanctuary.js.org/#chain) (3) - in this case the Future is consumed and a new future needs to be returned by the function.
 
 If we forget to use [`map`](https://sanctuary.js.org/#map) or [`map`](https://sanctuary.js.org/#chain) in a function call (1), the function receives the unfinished Future. It's like acting on a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) without calling `.then()` or `await` on it.
 
