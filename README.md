@@ -206,25 +206,81 @@ In this case it might be easier to TODO ...?
 
 Sanctuary doesn't provide special handling for promises. However, since
 they're used all over the place in JavaScript it would be great to deal
-with them in a functional way.
+with them in a functional way. There's a functional promises library for
+this: [Fluture](https://github.com/fluture-js/Fluture)s
+
+### Integration with Sanctuary
+
+Here's the official [Fluture sanctuary integration](https://github.com/fluture-js/Fluture#sanctuary). The important lines are:
+
+```javascript
+import sanctuary from "sanctuary";
+import { env as flutureEnv } from "fluture-sanctuary-types";
+const S = sanctuary.create({
+  checkTypes: true,
+  env: sanctuary.env.concat(flutureEnv),
+});
+```
+
+### The basic setup
+
+The `fork` call needs to be present in the program and there should be ideally _only one_ fork call. `fork` processes the promise. Without `fork` no processing of Futures takes place.
+
+```javascript
+fork(
+  // error case
+  log("rejection")
+)(
+  // resolution case
+  log("resolution")
+)(attemptP(() => Promise.resolve(42)));
+```
+
+### Call a promise-return function
+
+There are two main helper functions by Fluture to deal with promises: `attemptP` and `encaseP`.
+
+`attemptP` takes a function that doesn't take a parameter and turns it into a Future, e.g.:
+
+```javascript
+attemptP(() => Promise.resolve(42));
+```
+
+`encaseP` takes a function that takes one parameter and turns it into a Future, e.g.:
+
+```javascript
+encaseP(fetch)("https://api.github.com/users/Avaq");
+```
+
+### Processing Futures
+
+The main question is how do we deal with Futures in `S.pipe`. There are two important cases to keep in mind: [When to map or chain?](when-to-map-or-chain%3F). Either we process the Future with `S.map` (2) - in this case no knowledge about the Future is required by the function that receives the value - or with `S.chain` (3) - in this case the Future is consumed and a new future needs to be returned by the function.
+
+If we forget to use `S.map` or `S.chain` in a function call (1), the function receives the unfinished Future. It's like acting on a Promise without calling `.then()` or `await` on it.
 
 ```javascript
 const myfunction = S.pipe([
-  do1,
-  do2,
-  do3,
-  do4,
-  do5,
-  do6,
-  do7,
-  do8,
-  do9,
-  do10,
-  do11,
+  encaseP(fetch),
+  log("Try to log the output of fetch:"), // 1
+  S.map(log("Log the output of fetch:")), // 2
+  S.map(extractURL),
+  S.chain(encaseP(fetch)), // 3
 ]);
+
+fork(log("rejection"))(log("resolution"))(
+  myfunction("https://api.github.com/users/Avaq")
+);
 ```
 
+### Lists of Futures
+
+- parallel
+
 ## Error handling
+
+- Maybe
+- Either
+- bimap
 
 ## When to map or chain?
 
