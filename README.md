@@ -1,4 +1,4 @@
-![](https://img.shields.io/endpoint?url=https://github.com/identinet/sanctuary-cheat-sheet/?style=for-the-badge?label=Work-in-Progress?color=yellow)
+![Work in Progress](https://img.shields.io/badge/WIP-Work%20in%20Progress-yellow)
 
 # Sanctuary Cheat Sheet
 
