@@ -63,6 +63,8 @@ def ('add')                           // name
     (x => y => x + y);                // implementation
 ```
 
+TODO daggy
+
 ## Type definition - create your own functional types
 
 The types that can be used by functions need to be first defined. Sanctuary has a number of constructors for defining types. Take a look at sanctuary's [Type constructors](https://github.com/sanctuary-js/sanctuary-def#type-constructors). Here is a very simple one that defines an integer. Keep in mind that a documentation URL is required where more information can be found about the type - the project's `REAMDE.md` is a good place to keep the type definition documentation at:
@@ -396,15 +398,19 @@ TODO
 
 ## Read-Eval-Print-Loop - try out Sanctuary
 
-A web-based [Sanctuary](https://sanctuary.js.org/)-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green">green</span> box.
+### Web
 
-To quickly get a local [Sanctuary](https://sanctuary.js.org/) REPL use [Deno](https://deno.land/):
+A web-based [Sanctuary](https://sanctuary.js.org/)-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green;">green</span> box.
+
+### Local browser or deno
+
+To quickly get a local [Sanctuary](https://sanctuary.js.org/) REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) or install [Deno](https://deno.land/) and run this command:
 
 ```bash
 deno
 ```
 
-Then run these commands to import [Sanctuary](https://sanctuary.js.org/) and [Fluture](https://github.com/fluture-js/Fluture):
+Then paste these instructions in the REPL to import [Sanctuary](https://sanctuary.js.org/) and [Fluture](https://github.com/fluture-js/Fluture):
 
 ```javascipt
 // Sanctuary only:
@@ -415,7 +421,7 @@ import("https://cdn.skypack.dev/fluture-sanctuary-types").then(l => { S = S.crea
 let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
 ```
 
-Unfortunately, there's no faster option yet, see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
+For [Deno](https://deno.land/) there's unfortunately, s no faster option yet: see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
 
 ## Libraries - little helpers
 
