@@ -2,7 +2,7 @@
 
 # Sanctuary Cheat Sheet
 
-The goal of this cheat sheet is to make it easy for newcomers and experienced developers to work with the [Sanctuary library](https://sanctuary.js.org/) by describing common patterns and best practices.
+The goal of this cheat sheet is to make it easy for newcomers and experienced developers to work with the [Sanctuary library][sanctuary] by describing common patterns and best practices.
 
 [toc]
 
@@ -189,7 +189,7 @@ const myfunction = (parameter1) => {
 };
 ```
 
-In [Sanctuary](https://sanctuary.js.org/) it could be done with the [`ifElse`][ifelse] function as follows:
+In [Sanctuary][sanctuary] it could be done with the [`ifElse`][ifelse] function as follows:
 
 ```javascript
 const myfunction = (parameter1) =>
@@ -214,7 +214,7 @@ In this case it might be easier to TODO ...?
 
 ## Promises - back to the Future
 
-[Sanctuary](https://sanctuary.js.org/) doesn't provide special handling for [`Promises`][promise]. However, since they're used all over the place in JavaScript it would be great to deal with them in a functional way. There's a functional [`Promises`][promise] library for this: [Fluture](https://github.com/fluture-js/Fluture)
+[Sanctuary][sanctuary] doesn't provide special handling for [`Promises`][promise]. However, since they're used all over the place in JavaScript it would be great to deal with them in a functional way. There's a functional [`Promises`][promise] library for this: [Fluture](https://github.com/fluture-js/Fluture)
 
 ### Integration with Sanctuary
 
@@ -279,20 +279,26 @@ fork(log("rejection"))(log("resolution"))(
 );
 ```
 
+TODO
+
+- cancel
+
 ### Lists of Futures
 
 TODO
 
 - parallel
-- cancel
 
 ## Error handling
+
+When processing
 
 TODO
 
 - Maybe
 - Either
 - bimap
+- Futures
 
 ## map or chain?
 
@@ -300,7 +306,7 @@ There are these two different functions, [`map`][map] and [`chain`][chain], that
 
 ### map - transform a list of values
 
-[`map`][map] is defined by the [`Functor` class type](https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy). Every [`Functor`][functor] implements [`map`][map]. [`Functors`][functor] are often arrays and [`map`][map] maps a function over every element of the array. Example, add `1` to every element in an array of numbers:
+[`map`][map] is defined by the [`Functor` class type][functor]. Every [`Functor`][functor] implements [`map`][map]. [`Functors`][functor] are often arrays and [`map`][map] maps a function over every element of the array. Example, add `1` to every element in an array of numbers:
 
 ```javascript
 const numbers = [1, 2, 3];
@@ -400,17 +406,17 @@ TODO
 
 ### Web
 
-A web-based [Sanctuary](https://sanctuary.js.org/)-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green;">green</span> box.
+A web-based [Sanctuary][sanctuary]-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green;">green</span> box.
 
 ### Local browser or deno
 
-To quickly get a local [Sanctuary](https://sanctuary.js.org/) REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) or install [Deno](https://deno.land/) and run this command:
+To quickly get a local [Sanctuary][sanctuary] REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) or install [Deno](https://deno.land/) and run this command:
 
 ```bash
 deno
 ```
 
-Then paste these instructions in the REPL to import [Sanctuary](https://sanctuary.js.org/) and [Fluture](https://github.com/fluture-js/Fluture):
+Then paste these instructions in the REPL to import [Sanctuary][sanctuary] and [Fluture](https://github.com/fluture-js/Fluture):
 
 ```javascipt
 // Sanctuary only:
@@ -425,7 +431,7 @@ For [Deno](https://deno.land/) there's unfortunately, s no faster option yet: se
 
 ## Libraries - little helpers
 
-- Sanctuary - Refuge from unsafe JavaScript: [Sanctuary](https://sanctuary.js.org/)
+- Sanctuary - Refuge from unsafe JavaScript: [Sanctuary][sanctuary]
 - Sanctuary type class overview: [Sanctuary Type Classes](https://github.com/sanctuary-js/sanctuary-type-classes) and [Fantasy Land Specification](https://github.com/fantasyland/fantasy-land)
 - Sanctuary type overview: [sanctuary-def](https://github.com/sanctuary-js/sanctuary-def)
 - Fluture - Fantasy Land compliant (monadic) alternative to Promises: [Fluture](https://github.com/fluture-js/Fluture)
@@ -457,3 +463,4 @@ For [Deno](https://deno.land/) there's unfortunately, s no faster option yet: se
 [pipe]: https://sanctuary.js.org/#pipe
 [promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 [reduce]: https://sanctuary.js.org/#reduce
+[sanctuary]: https://sanctuary.js.org/
