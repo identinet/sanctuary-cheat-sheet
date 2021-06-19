@@ -14,7 +14,7 @@ There are three aspects to defining functions:
 1. Define the processing steps
 1. Define the function signature with types
 
-### Define parameters - gimme, gimme, gimme!
+### Define parameters
 
 In functional programming functions are usually curried. This means that a function only takes one parameter. If a function requires more than one parameter it should be defined as a function that takes one parameter and returns a functional that requires another parameter.
 
@@ -26,7 +26,7 @@ const myfunction = (parameter1) => (parameter2) => (parameter3) => {
 };
 ```
 
-### Define processing steps - getting things done
+### Define processing steps
 
 In sanctuary there's a convenient way of defining the processing steps - the [`pipe`][pipe] function. [`pipe`][pipe] takes a list of functions and it passes the output value of one function as the input value into the following function. See [Piping](#piping---connecting-function-outputs-to-function-inputs-and-avoid-intermediate-variables) for more information:
 
@@ -42,7 +42,7 @@ const myfunction = (parameter1) =>
   ])(parameter1);
 ```
 
-### Define function signature with types - type-safety first
+### Define function signature with types
 
 For very simple functions defining processing steps might be enough. However, to get all the benefits from sanctuary's type checking functionality the function signature needs to be defined the sanctuary way. Take a look at the [built-in types](https://github.com/sanctuary-js/sanctuary-def#types):
 
