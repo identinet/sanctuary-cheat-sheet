@@ -289,17 +289,6 @@ TODO
 
 - parallel
 
-## Error handling
-
-When processing
-
-TODO
-
-- Maybe
-- Either
-- bimap
-- Futures
-
 ## map or chain?
 
 There are these two different functions, [`map`][map] and [`chain`][chain], that look very similar. However, using one over the other is sometimes advantageous.
@@ -390,13 +379,85 @@ S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
 
 ## reduce - accumulate values
 
-In the same way as [`filter`][filter], [`reduce`][reduce] operates on an array of values and transforms + collects them into an accumulated new value (this concept is so powerful [`map`][map] and [`filter`][filter] can be expressed with [`reduce`][reduce] .. but it is more difficult to understand. We'll stick to the accumulation feature here). For example, the values of the array could be summed up:
+In the same way as [`filter`][filter], [`reduce`][reduce] operates on an array of values and transforms + collects them into an accumulated new value. This concept of accumulating values is so powerful that [`map`][map] and [`filter`][filter] can be expressed with [`reduce`][reduce]. However, expressing [`map`][map] or [`filter`][filter] via [`reduce`][reduce] is more difficult to read than using the predefined functions. Therefore, we'll stick to the simple accumulation feature here. For example, the values of an array could be summed up with [`reduce`][reduce]:
 
 ```javascript
 S.reduce((acc) => (x) => acc + x)(0)([1, 2, 3, 4, 5]);
 
 // 15
 ```
+
+## Error handling
+
+When processing data sometimes the data doesn't coform to the requirements and an error is raised. In [Sanctuary][sanctuary] there are multiple ways of handling errors, a few of them are explored here:
+
+### Maybe - the better null/NaN/undefined return value
+
+A function might not be able to operate on all possible input values. For example, the [`parseInt`][parseint] function takes a string and tries to parse an integer from it. When it fails to parse the string the function could return [`null`][null], [`undefined`][undefined] or [`NaN`][nan] but this leaves lots of room for interpretation as it's not clear whether the function was able to process the input properly.
+
+Instead, a [`Maybe`][maybe] type could be returned that wraps the actual result in either a [`Just`][just] or a [`Nothing`][nothing] object. When wrapping the return value in a [`Maybe`][maybe] object further processing steps graciously deal with the result. For example, [`map`][map] only executes the transformation function when a [`Just`][just] object is returned:
+
+```javascript
+const myParseInt = (str) => {
+  const res = parseInt(str);
+  if (isNaN(res)) {
+    return S.Nothing;
+  }
+  return S.Just(res);
+};
+
+S.pipe([
+  S.map(
+    S.pipe([
+      myParseInt,
+      S.map((x) => x + 10),
+      S.map((x) => x * 3),
+      S.map((x) => x / 6),
+    ])
+  ),
+  S.show,
+])(["1", "invalid1"]);
+
+// [Just (5.5), Nothing]
+```
+
+Additional [functions][maybe] exist for handling [`Maybe`][maybe] objects.
+
+### Either - the better alternative to throw Error
+
+Another programming challenge is to deal with errors, for example when an attempted division by zero. Instead of [`throwing`][throw] an [`Error`][error], [Sanctuary][sanctuary] offers the [`Either`][either] type that can be a [`Right`][right] object that includes the successful result or a [`Left`][left] object that includes the error.
+
+[`Either`][either] is different from [`Maybe`][maybe] in that [`Left`][left] contains additional data for processing and potentially recovering from the error while [`Nothing`][nothing] contains no data.
+
+```javascript
+const myDiv = (num) => (divider) => {
+  if (divider === 0) {
+    return S.Left("Division by zero.");
+  }
+  return S.Right(num / divider);
+};
+
+S.pipe([
+  S.map(
+    S.pipe([
+      myDiv(25),
+      S.map((x) => x + 10),
+      S.map((x) => x * 3),
+      S.map((x) => x / 6),
+    ])
+  ),
+  S.show,
+])([5, 0]);
+
+// [Right (7.5), Left ("Division by zero.")]
+```
+
+Additional [functions][either] exist for handling [`Either`][either] objects.
+
+TODO
+
+- bimap
+- Futures
 
 ## key-value - Pair
 
@@ -457,10 +518,19 @@ For [Deno](https://deno.land/) there's unfortunately, s no faster option yet: se
 [join]: https://sanctuary.js.org/#join
 [just]: https://sanctuary.js.org/#Just
 [map]: https://sanctuary.js.org/#map
+[maybe]: https://sanctuary.js.org/#Maybe
 [nothing]: https://sanctuary.js.org/#Nothing
+[either]: https://sanctuary.js.org/#Either
 [pair]: https://sanctuary.js.org/#section:pair
 [parseint]: https://sanctuary.js.org/#parseInt
 [pipe]: https://sanctuary.js.org/#pipe
 [promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
+[null]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null
+[undefined]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined
+[nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN
+[throw]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw
 [reduce]: https://sanctuary.js.org/#reduce
+[right]: https://sanctuary.js.org/#Right
+[left]: https://sanctuary.js.org/#Left
 [sanctuary]: https://sanctuary.js.org/
