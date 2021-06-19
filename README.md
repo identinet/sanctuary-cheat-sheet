@@ -98,13 +98,6 @@ const myfunction = (parameter1) => (parameter2) => (parameter3) => {
   const resA = doA(parameter1);
   const resB = doB(parameter2)(resA);
   const resC = doC(parameter3)(resB);
-  const resD = doD(resC);
-  const resE = doE(resD);
-  const resF = doF(resE);
-  const resG = doG(resF);
-  const resH = doH(resG);
-  const resI = doI(resH);
-  const resJ = doJ(resI);
   return resC;
 };
 ```
@@ -115,15 +108,9 @@ This could be optimized with the [`pipe`][pipe] function by removing the variabl
 const myfunction = (parameter1) => (parameter2) => (parameter3) =>
   S.pipe([
     doA,
+    // output of doA is piped as input into doB
     doB(parameter2),
     doC(parameter3),
-    doD,
-    doE,
-    doF,
-    doG,
-    doH,
-    doI,
-    doJ,
   ])(parameter1);
 ```
 
@@ -131,25 +118,18 @@ const myfunction = (parameter1) => (parameter2) => (parameter3) =>
 
 The goal of print debugging is to peek into a function execution chain and learn about intermediate results.
 
-Example, given the following function - how to inspect the return value of `do3`?
+Example, given the following function - how to inspect the return value of `doA`?
 
 ```javascript
 const myfunction = S.pipe([
-  do1,
-  do2,
-  do3,
-  do4,
-  do5,
-  do6,
-  do7,
-  do8,
-  do9,
-  do10,
-  do11,
+  // some function calls
+  doA,
+  doB,
+  doC,
 ]);
 ```
 
-Solution, define a `log` function that prints a message and the received value and returns the value. Then add the `log` function between `do3` and `do4`:
+Solution, define a `log` function that prints a message and the received value and returns the value. Then add the `log` function between `doA` and `doB`:
 
 ```javascript
 const log = (msg) => (value) => {
@@ -158,18 +138,11 @@ const log = (msg) => (value) => {
 };
 
 const myfunction = S.pipe([
-  do1,
-  do2,
-  do3,
+  doA,
+  // insert log function
   log("Return value of do3:"),
-  do4,
-  do5,
-  do6,
-  do7,
-  do8,
-  do9,
-  do10,
-  do11,
+  doB,
+  doC,
 ]);
 ```
 
@@ -372,17 +345,32 @@ S.pipe([
 When composing function calls with [`pipe`][pipe] it's common that arrays of values are processed. [`map`][map] is great for transforming array elements with the help of other functions. However, sometimes the list of array elemets needs to be reduced before processing them further. For example, `null` values or [`Nothing`][nothing] values need to be removed or numbers that are lower than a certain threshold. This can be easily done with [`filter`][filter] that takes a predicate / filter function:
 
 ```javascript
-S.filter((x) => x > 3)([1, 2, 3, 4, 5]);
+S.filter(
+  // predicate function that's applied to input values
+  (x) => x > 3
+)(
+  // the input values
+  [1, 2, 3, 4, 5]
+);
 
 // [ 4, 5 ]
 ```
 
 ## reduce - accumulate values
 
-In the same way as [`filter`][filter], [`reduce`][reduce] operates on an array of values and transforms + collects them into an accumulated new value. This concept of accumulating values is so powerful that [`map`][map] and [`filter`][filter] can be expressed with [`reduce`][reduce]. However, expressing [`map`][map] or [`filter`][filter] via [`reduce`][reduce] is more difficult to read than using the predefined functions. Therefore, we'll stick to the simple accumulation feature here. For example, the values of an array could be summed up with [`reduce`][reduce]:
+In the same way as [`filter`][filter], [`reduce`][reduce] operates on an array of values and transforms + collects them into an accumulated/reduced new value. This concept of reducing values is so powerful that [`map`][map] and [`filter`][filter] can be expressed with [`reduce`][reduce]. However, expressing [`map`][map] or [`filter`][filter] via [`reduce`][reduce] is more difficult to read than using the predefined functions. Therefore, we'll stick to simple reduction feature here. For example, the values of an array could be summed up with [`reduce`][reduce]:
 
 ```javascript
-S.reduce((acc) => (x) => acc + x)(0)([1, 2, 3, 4, 5]);
+S.reduce(
+  // function that performs the accumulation / reduction of values
+  (acc) => (x) => acc + x
+)(
+  // start value for acc
+  0
+)(
+  // the input values
+  [1, 2, 3, 4, 5]
+);
 
 // 15
 ```
@@ -409,7 +397,9 @@ const myParseInt = (str) => {
 S.pipe([
   S.map(
     S.pipe([
+      // call to function that produces a Maybe result object
       myParseInt,
+      // further processing
       S.map((x) => x + 10),
       S.map((x) => x * 3),
       S.map((x) => x / 6),
@@ -440,7 +430,9 @@ const myDiv = (num) => (divider) => {
 S.pipe([
   S.map(
     S.pipe([
+      // call to function that produces an Either result object
       myDiv(25),
+      // further processing
       S.map((x) => x + 10),
       S.map((x) => x * 3),
       S.map((x) => x / 6),
@@ -509,7 +501,9 @@ For [Deno](https://deno.land/) there's unfortunately, s no faster option yet: se
 
 [attemptp]: https://github.com/fluture-js/Fluture#attemptp
 [chain]: https://sanctuary.js.org/#chain
+[either]: https://sanctuary.js.org/#Either
 [encasep]: https://github.com/fluture-js/Fluture#encaseP
+[error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [filter]: https://sanctuary.js.org/#filter
 [fork]: https://github.com/fluture-js/Fluture#fork
 [functor]: https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy
@@ -517,20 +511,18 @@ For [Deno](https://deno.land/) there's unfortunately, s no faster option yet: se
 [ifelse]: https://sanctuary.js.org/#ifElse
 [join]: https://sanctuary.js.org/#join
 [just]: https://sanctuary.js.org/#Just
+[left]: https://sanctuary.js.org/#Left
 [map]: https://sanctuary.js.org/#map
 [maybe]: https://sanctuary.js.org/#Maybe
+[nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN
 [nothing]: https://sanctuary.js.org/#Nothing
-[either]: https://sanctuary.js.org/#Either
+[null]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null
 [pair]: https://sanctuary.js.org/#section:pair
 [parseint]: https://sanctuary.js.org/#parseInt
 [pipe]: https://sanctuary.js.org/#pipe
 [promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-[error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
-[null]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null
-[undefined]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined
-[nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN
-[throw]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw
 [reduce]: https://sanctuary.js.org/#reduce
 [right]: https://sanctuary.js.org/#Right
-[left]: https://sanctuary.js.org/#Left
 [sanctuary]: https://sanctuary.js.org/
+[throw]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw
+[undefined]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined
