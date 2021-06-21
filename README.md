@@ -4,6 +4,8 @@
 
 The goal of this cheat sheet is to make it easy for newcomers and experienced developers to work with the [Sanctuary library][sanctuary] by describing common patterns and best practices.
 
+WARNING: the information in this cheat sheet is by no means a comprehensive collection of all the library functions and types. Nor are the examples the only or even the best way of how to use them in your code. Keep this in mind and also dive into [other resouces](#resources---additional-things-that-might-be-helpful). I highly recommend reading [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/) and the [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/).
+
 [toc]
 
 ## Function definition
@@ -275,7 +277,7 @@ fork(log("rejection"))(log("resolution"))(
 
 ### Stopping the Future
 
-Unlike [`Promises`][promise], [`Futures`][future] don't execute the contained function unless [`fork`][fork] is called on it. This makes it possible to stop a [`Future`][future] or to never execute it if not needed. The functinality is described in detail in the [Cancellation documentation][cancellation].
+Unlike [`Promises`][promise], [`Futures`][future] don't execute the contained function unless [`fork`][fork] is called on it. This makes it possible to stop a [`Future`][future] or to never execute it if not needed. The functionality is described in detail in the [Cancellation documentation][cancellation].
 
 ## map or chain?
 
@@ -357,7 +359,7 @@ S.pipe([
 
 ## filter - remove unneeded values
 
-When composing function calls with [`pipe`][pipe] it's common that arrays of values are processed. [`map`][map] is great for transforming array elements with the help of other functions. However, sometimes the list of array elemets needs to be reduced before processing them further. For example, `null` values or [`Nothing`][nothing] values need to be removed or numbers that are lower than a certain threshold. This can be easily done with [`filter`][filter] that takes a predicate / filter function:
+When composing function calls with [`pipe`][pipe] it's common that arrays of values are processed. [`map`][map] is great for transforming array elements with the help of other functions. However, sometimes the list of array elements needs to be reduced before processing them further. For example, `null` values or [`Nothing`][nothing] values need to be removed or numbers that are lower than a certain threshold. This can be easily done with [`filter`][filter] that takes a predicate / filter function:
 
 ```javascript
 S.filter(
@@ -392,7 +394,7 @@ S.reduce(
 
 ## Error handling
 
-When processing data sometimes the data doesn't coform to the requirements and an error is raised. In [Sanctuary][sanctuary] there are multiple ways of handling errors, a few of them are explored here:
+When processing data sometimes the data doesn't conform to the requirements and an error is raised. In [Sanctuary][sanctuary] there are multiple ways of handling errors, a few of them are explored here:
 
 ### Maybe - the better null/NaN/undefined return value
 
@@ -532,7 +534,7 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 - Fluture - Fantasy Land compliant (monadic) alternative to Promises: [Fluture](https://github.com/fluture-js/Fluture)
 - Most - Monadic stream for reactive programming: [Most](https://github.com/cujojs/most)
 
-## Resources - addiontal things that might be helpful
+## Resources - additional things that might be helpful
 
 - Sanctuary library introduction: [Sanctuary, Programming Safely in an Uncertain World](https://www.youtube.com/watch?v=a2astdDbOjk)
 - Introduction to functional programming: [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
