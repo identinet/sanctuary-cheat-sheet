@@ -409,7 +409,7 @@ const myParseInt = (str) => {
   return S.Just(res);
 };
 
-S.pipe([
+S.show(
   S.map(
     S.pipe([
       // call to function that produces a Maybe result object
@@ -417,9 +417,8 @@ S.pipe([
       // further processing
       S.map((x) => x + 10),
     ])
-  ),
-  S.show,
-])(["1", "invalid1"]);
+  )(["1", "invalid1"])
+);
 
 // result: [Just (11), Nothing]
 ```
@@ -468,7 +467,7 @@ const myDiv = (num) => (divider) => {
   return S.Right(num / divider);
 };
 
-S.pipe([
+S.show(
   S.map(
     S.pipe([
       // call to function that produces an Either result object
@@ -476,18 +475,27 @@ S.pipe([
       // further processing
       S.bimap(S.toUpper)((x) => x + 10),
     ])
-  ),
-  S.show,
-])([5, 0]);
+  )([5, 0])
+);
 
-// result: [Right (15), Left ("Division by zero.")]
+// result: [Right (15), Left ("DIVISION BY ZERO.")]
 ```
 
-[`mapLeft`][mapleft] is another option for just interacting with the second value of the type. For [`Futures`][future], [`coalesce`][coalesce] and [`mapRej`][maprej] are the respective functions for dealing with rejected values.
+[`mapLeft`][mapleft] is another option for just interacting with the error case. For [`Futures`][future], [`coalesce`][coalesce] and [`mapRej`][maprej] are the respective functions for dealing with rejected values.
 
-## key-value - Pair
+## Pair - storing key-value pairs
 
-TODO
+[Sanctuary][sanctuary] provides the type [`Pair`][pair] for storing key-value pairs. Compared to a simple JavaScript [`Object`][object] (`{}`), [`Pair`][pair] plays nicely with other functions, e.g. [`map`][map], [`mapLeft`][mapleft]:
+
+```javascipt
+const p = S.Pair('balance')(1)
+
+S.show(S.map(x => x * 2)(p))
+// result: Pair ("balance") (2)
+
+S.show(S.mapLeft(x => "accountnumber")(p))
+// result: Pair ("accountnumber") (1)
+```
 
 ## Read-Eval-Print-Loop - try out Sanctuary
 
@@ -549,7 +557,7 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 [join]: https://sanctuary.js.org/#join
 [just]: https://sanctuary.js.org/#Just
 [left]: https://sanctuary.js.org/#Left
-[mapRej]: https://github.com/fluture-js/Fluture#mapRej
+[maprej]: https://github.com/fluture-js/Fluture#mapRej
 [map]: https://sanctuary.js.org/#map
 [mapleft]: https://sanctuary.js.org/#mapLeft
 [maybe]: https://sanctuary.js.org/#Maybe
@@ -566,3 +574,4 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 [sanctuary]: https://sanctuary.js.org/
 [throw]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw
 [undefined]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined
+[object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
