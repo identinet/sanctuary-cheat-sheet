@@ -275,7 +275,7 @@ const numbers = [1, 2, 3];
 const add = (number1) => (number2) => number1 + number2;
 S.map(add(1))(numbers);
 
-// [2, 3, 4]
+// result: [2, 3, 4]
 ```
 
 In addition, something like a [`Pair`][pair] or a [`Promise`][promise] could also be a [`Functor`][functor]. In this case [`map`][map] maps over the value, e.g. the result of a [`Promise`][promise] or the value of a [`Pair`][pair].
@@ -285,7 +285,7 @@ const pair = S.Pair("a")(1);
 const add = (number1) => (number2) => number1 + number2;
 S.map(add(1))(pair);
 
-// Pair ("a") (2)
+// result: Pair ("a") (2)
 ```
 
 As you can see in the example, the `add` doesn't concern itself with the inner workings of the data type but just operates on the value. [`map`][map] does the heavy lifting of getting the [`Functors`][functor] value out and wrapping the modified value back in a [`Functor`][functor]. This is very convenient because it makes functions easily applicable to all kinds of [`Functors`][functor].
@@ -300,7 +300,7 @@ S.pipe([
   S.map(S.ifElse((v) => v > 10)(S.Just)((v) => S.Nothing)),
 ])("100");
 
-// Just (Just (100))
+// result: Just (Just (100))
 ```
 
 There are now two nested [`Just`][just] data types. As you can see from the implementation, the function that's called by [`map`][map]already uses the complex data type [`Pair`][pair] (implemented by [`Just`][just] and [`Nothing`][nothing]). Therefore, if since we pass a [`Pair`][pair] into the function and the function returns a [`Pair`][pair], we don't need[`map`][map]'s feature of wrapping the returned value in the passed in [`Functor`][functor]. [`chain`][chain] as defined by the Chain class type does exactly that, it expects the function to properly wrap the return value in the [`Functor`][functor]. This is important when working with [`Promises`][promise] to ensure that we're not wrapping an unresolved [`Promise`][promise] inside a resolved [`Promise`][promise] but return the unresolved [`Promise`][promise] so we can wait for its completion:
@@ -311,7 +311,7 @@ S.pipe([
   S.chain(S.ifElse((v) => v > 10)(S.Just)((v) => S.Nothing)),
 ])("100");
 
-// Just (100)
+// result: Just (100)
 ```
 
 ### join - combine multiple objects of the same type
@@ -325,7 +325,7 @@ S.pipe([
   S.join, // added join
 ])("100");
 
-// Just (100)
+// result: Just (100)
 ```
 
 Note that the added [`join`][join] plays nicely in case [`Nothing`][nothing] is returned by [`parseInt`][parseint]:
@@ -337,7 +337,7 @@ S.pipe([
   S.join, // added join
 ])("invalid100");
 
-// Nothing
+// result: Nothing
 ```
 
 ## filter - remove unneeded values
@@ -372,7 +372,7 @@ S.reduce(
   [1, 2, 3, 4, 5]
 );
 
-// 15
+// result: 15
 ```
 
 ## Error handling
@@ -401,14 +401,12 @@ S.pipe([
       myParseInt,
       // further processing
       S.map((x) => x + 10),
-      S.map((x) => x * 3),
-      S.map((x) => x / 6),
     ])
   ),
   S.show,
 ])(["1", "invalid1"]);
 
-// [Just (5.5), Nothing]
+// result: [Just (11), Nothing]
 ```
 
 Additional [functions][maybe] exist for handling [`Maybe`][maybe] objects.
@@ -434,14 +432,12 @@ S.pipe([
       myDiv(25),
       // further processing
       S.map((x) => x + 10),
-      S.map((x) => x * 3),
-      S.map((x) => x / 6),
     ])
   ),
   S.show,
 ])([5, 0]);
 
-// [Right (7.5), Left ("Division by zero.")]
+// result: [Right (15), Left ("Division by zero.")]
 ```
 
 Additional [functions][either] exist for handling [`Either`][either] objects.
