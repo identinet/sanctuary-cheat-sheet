@@ -487,7 +487,7 @@ S.show(
 
 ## Pair - storing key-value pairs
 
-[Sanctuary][sanctuary] provides the type [`Pair`][pair] for storing key-value pairs. Compared to a simple JavaScript [`Object`][object] (`{}`), [`Pair`][pair] plays nicely with other functions, e.g. [`map`][map], [`mapLeft`][mapleft]:
+[Sanctuary][sanctuary] provides the type [`Pair`][pair] for storing key-value pairs. Compared to a simple JavaScript [`Object`][object] (`{}`), [`Pair`][pair] plays nicely with other functions, e.g. [`map`][map] and [`mapLeft`][mapleft]:
 
 ```javascipt
 const p = S.Pair('balance')(1)
