@@ -200,6 +200,7 @@ const S = sanctuary.create({
   checkTypes: true,
   env: sanctuary.env.concat(flutureEnv),
 });
+import { fork, encaseP, attemptP, parallel } from "Fluture";
 ```
 
 ### Basic setup
@@ -252,15 +253,25 @@ fork(log("rejection"))(log("resolution"))(
 );
 ```
 
-TODO
+### Parallel Futures
 
-- cancel
+It's also possible to process multiple [`Futures`][future] in a functional way. For example, multiple long-running computations should to be performed. [`parallel`][parallel] provides this functionality and controls the number of parallel executions with the first parameter:
 
-### Lists of Futures
+```javascript
+let myLongRunningFunction = (x) => {
+  // computation take 1 sec
+  return new Promise((resolve, reject) => setTimeout(resolve, 1000, x * 2));
+};
 
-TODO
-
-- parallel
+fork(log("rejection"))(log("resolution"))(
+  S.pipe([
+    // 5 Futures are created
+    S.map(encaseP(myLongRunningFunction)),
+    // 2 Futures are processed in parallel until all are resolved
+    parallel(2),
+  ])([1, 2, 3, 4, 5])
+);
+```
 
 ## map or chain?
 
@@ -514,6 +525,7 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 [nothing]: https://sanctuary.js.org/#Nothing
 [null]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null
 [pair]: https://sanctuary.js.org/#section:pair
+[parallel]: https://github.com/fluture-js/Fluture#parallel
 [parseint]: https://sanctuary.js.org/#parseInt
 [pipe]: https://sanctuary.js.org/#pipe
 [promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
