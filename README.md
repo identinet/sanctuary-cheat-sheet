@@ -258,7 +258,7 @@ fork(log("rejection"))(log("resolution"))(
 It's also possible to process multiple [`Futures`][future] in a functional way. For example, multiple long-running computations should to be performed. [`parallel`][parallel] provides this functionality and controls the number of parallel executions with the first parameter:
 
 ```javascript
-let myLongRunningFunction = (x) => {
+const myLongRunningFunction = (x) => {
   // computation take 1 sec
   return new Promise((resolve, reject) => setTimeout(resolve, 1000, x * 2));
 };
@@ -440,13 +440,41 @@ const myDiv = (num) => (divider) => {
   return S.Right(num / divider);
 };
 
-S.pipe([
+S.show(
   S.map(
     S.pipe([
       // call to function that produces an Either result object
       myDiv(25),
       // further processing
       S.map((x) => x + 10),
+    ])
+  )([5, 0])
+);
+
+// result: [Right (15), Left ("Division by zero.")]
+```
+
+Additional [functions][either] exist for handling [`Either`][either] objects.
+
+### bimap - mapping over two values (potential failure)
+
+When there are multiple subtypes to deal with like [`Left`][left] and [`Right`][right] it would be handy to be able to map over both options. [`bimap`][bimap] provides this feature so we can begin handling the failure:
+
+```javascript
+const myDiv = (num) => (divider) => {
+  if (divider === 0) {
+    return S.Left("Division by zero.");
+  }
+  return S.Right(num / divider);
+};
+
+S.pipe([
+  S.map(
+    S.pipe([
+      // call to function that produces an Either result object
+      myDiv(25),
+      // further processing
+      S.bimap(S.toUpper)((x) => x + 10),
     ])
   ),
   S.show,
@@ -455,12 +483,7 @@ S.pipe([
 // result: [Right (15), Left ("Division by zero.")]
 ```
 
-Additional [functions][either] exist for handling [`Either`][either] objects.
-
-TODO
-
-- bimap
-- Futures
+[`mapLeft`][mapleft] is another option for just interacting with the second value of the type. For [`Futures`][future], [`coalesce`][coalesce] and [`mapRej`][maprej] are the respective functions for dealing with rejected values.
 
 ## key-value - Pair
 
@@ -511,8 +534,10 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 - Functional programming book: [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
 
 [attemptp]: https://github.com/fluture-js/Fluture#attemptp
+[bimap]: https://sanctuary.js.org/#bimap
 [cancellation]: https://github.com/fluture-js/Fluture#cancellation
 [chain]: https://sanctuary.js.org/#chain
+[coalesce]: https://github.com/fluture-js/Fluture#coalesce
 [either]: https://sanctuary.js.org/#Either
 [encasep]: https://github.com/fluture-js/Fluture#encaseP
 [error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
@@ -524,7 +549,9 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 [join]: https://sanctuary.js.org/#join
 [just]: https://sanctuary.js.org/#Just
 [left]: https://sanctuary.js.org/#Left
+[mapRej]: https://github.com/fluture-js/Fluture#mapRej
 [map]: https://sanctuary.js.org/#map
+[mapleft]: https://sanctuary.js.org/#mapLeft
 [maybe]: https://sanctuary.js.org/#Maybe
 [nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN
 [nothing]: https://sanctuary.js.org/#Nothing
