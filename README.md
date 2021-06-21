@@ -273,6 +273,10 @@ fork(log("rejection"))(log("resolution"))(
 );
 ```
 
+### Stopping the Future
+
+Unlike [`Promises`][promise], [`Futures`][future] don't execute the contained function unless [`fork`][fork] is called on it. This makes it possible to stop a [`Future`][future] or to never execute it if not needed. The functinality is described in detail in the [Cancellation documentation][cancellation].
+
 ## map or chain?
 
 There are these two different functions, [`map`][map] and [`chain`][chain], that look very similar. However, using one over the other is sometimes advantageous.
@@ -507,6 +511,7 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 - Functional programming book: [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
 
 [attemptp]: https://github.com/fluture-js/Fluture#attemptp
+[cancellation]: https://github.com/fluture-js/Fluture#cancellation
 [chain]: https://sanctuary.js.org/#chain
 [either]: https://sanctuary.js.org/#Either
 [encasep]: https://github.com/fluture-js/Fluture#encaseP
