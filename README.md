@@ -542,6 +542,7 @@ For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [
 - Functional programming video tutorial series: [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/lessons/javascript-you-ve-been-using-monads)
 - Functional programming book: [Prof. Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
 - Functional programming book: [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
+- Functional programming book: [Functional-Light JavaScript](https://github.com/getify/functional-light-js)
 
 [attemptp]: https://github.com/fluture-js/Fluture#attemptp
 [bimap]: https://sanctuary.js.org/#bimap
