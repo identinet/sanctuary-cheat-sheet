@@ -6,6 +6,7 @@ The goal of this cheat sheet is to make it easy for newcomers and experienced de
 
 WARNING: the information in this cheat sheet is by no means a comprehensive collection of all the library functions and types. Nor are the examples the only or even the best way of how to use them in your code. Keep this in mind and also dive into [other resouces](#resources---additional-things-that-might-be-helpful). I highly recommend reading [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/) and the [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/).
 
+<!-- Table of Contents generated with: https://github.com/ycd/toc -->
 <!--toc-->
 - [Sanctuary Cheat Sheet](#sanctuary-cheat-sheet)
     * [Function definition](#function-definition)
