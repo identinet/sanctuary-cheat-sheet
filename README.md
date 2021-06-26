@@ -8,38 +8,39 @@ WARNING: the information in this cheat sheet is by no means a comprehensive coll
 
 <!-- Table of Contents generated with: https://github.com/ycd/toc -->
 <!--toc-->
+
 - [Sanctuary Cheat Sheet](#sanctuary-cheat-sheet)
-    * [Function definition](#function-definition)
-        * [Define parameters](#define-parameters)
-        * [Define processing steps](#define-processing-steps)
-        * [Define function signature with types](#define-function-signature-with-types)
-    * [Type definition - create your own functional types](#type-definition---create-your-own-functional-types)
-    * [Piping - connecting function outputs to function inputs and avoid intermediate variables](#piping---connecting-function-outputs-to-function-inputs-and-avoid-intermediate-variables)
-    * [Print debugging - inspecting intermediate values](#print-debugging---inspecting-intermediate-values)
-    * [Branching - handling if-else cases](#branching---handling-if-else-cases)
-    * [Promises - back to the Future](#promises---back-to-the-future)
-        * [Integration with Sanctuary](#integration-with-sanctuary)
-        * [Basic setup](#basic-setup)
-        * [Promises - working with Promise-returning functions](#promises---working-with-promise-returning-functions)
-        * [Processing - the Future is yet to come](#processing---the-future-is-yet-to-come)
-        * [Parallel Futures](#parallel-futures)
-        * [Stopping the Future](#stopping-the-future)
-    * [map or chain?](#map-or-chain)
-        * [map - transform a list of values](#map---transform-a-list-of-values)
-        * [chain - perform type-aware transformation of values](#chain---perform-type-aware-transformation-of-values)
-        * [join - combine multiple objects of the same type](#join---combine-multiple-objects-of-the-same-type)
-    * [filter - remove unneeded values](#filter---remove-unneeded-values)
-    * [reduce - accumulate values](#reduce---accumulate-values)
-    * [Error handling](#error-handling)
-        * [Maybe - the better null/NaN/undefined return value](#maybe---the-better-nullnanundefined-return-value)
-        * [Either - the better alternative to throw Error](#either---the-better-alternative-to-throw-error)
-        * [bimap - mapping over two values (potential failure)](#bimap---mapping-over-two-values-potential-failure)
-    * [Pair - storing key-value pairs](#pair---storing-key-value-pairs)
-    * [Read-Eval-Print-Loop - try out Sanctuary](#read-eval-print-loop---try-out-sanctuary)
-        * [Web](#web)
-        * [Local browser or deno](#local-browser-or-deno)
-    * [Libraries - little helpers](#libraries---little-helpers)
-    * [Resources - additional things that might be helpful](#resources---additional-things-that-might-be-helpful)
+  - [Function definition](#function-definition)
+    - [Define parameters](#define-parameters)
+    - [Define processing steps](#define-processing-steps)
+    - [Define function signature with types](#define-function-signature-with-types)
+  - [Type definition - create your own functional types](#type-definition---create-your-own-functional-types)
+  - [Piping - connecting function outputs to function inputs and avoid intermediate variables](#piping---connecting-function-outputs-to-function-inputs-and-avoid-intermediate-variables)
+  - [Print debugging - inspecting intermediate values](#print-debugging---inspecting-intermediate-values)
+  - [Branching - handling if-else cases](#branching---handling-if-else-cases)
+  - [Promises - back to the Future](#promises---back-to-the-future)
+    - [Integration with Sanctuary](#integration-with-sanctuary)
+    - [Basic setup](#basic-setup)
+    - [Promises - working with Promise-returning functions](#promises---working-with-promise-returning-functions)
+    - [Processing - the Future is yet to come](#processing---the-future-is-yet-to-come)
+    - [Parallel Futures](#parallel-futures)
+    - [Stopping the Future](#stopping-the-future)
+  - [map or chain?](#map-or-chain)
+    - [map - transform a list of values](#map---transform-a-list-of-values)
+    - [chain - perform type-aware transformation of values](#chain---perform-type-aware-transformation-of-values)
+    - [join - combine multiple objects of the same type](#join---combine-multiple-objects-of-the-same-type)
+  - [filter - remove unneeded values](#filter---remove-unneeded-values)
+  - [reduce - accumulate values](#reduce---accumulate-values)
+  - [Error handling](#error-handling)
+    - [Maybe - the better null/NaN/undefined return value](#maybe---the-better-nullnanundefined-return-value)
+    - [Either - the better alternative to throw Error](#either---the-better-alternative-to-throw-error)
+    - [bimap - mapping over two values (potential failure)](#bimap---mapping-over-two-values-potential-failure)
+  - [Pair - storing key-value pairs](#pair---storing-key-value-pairs)
+  - [Read-Eval-Print-Loop - try out Sanctuary](#read-eval-print-loop---try-out-sanctuary)
+    - [Web](#web)
+    - [Local browser or deno](#local-browser-or-deno)
+  - [Libraries - little helpers](#libraries---little-helpers)
+  - [Resources - additional things that might be helpful](#resources---additional-things-that-might-be-helpful)
 
 <!-- tocstop -->
 
@@ -544,6 +545,14 @@ A web-based [Sanctuary][sanctuary]-only REPL is available [online](https://sanct
 
 To quickly get a local [Sanctuary][sanctuary] REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) or install [Deno](https://deno.land/) and run this command:
 
+For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
+
+```bash
+deno relp --eval 'import {S, F} from "https://deno.land/x/sanctuary_cheat_sheet/repl.js"'
+```
+
+#### Older deno <= 1.11.2 version
+
 ```bash
 deno
 ```
@@ -558,8 +567,6 @@ let S; import("https://cdn.skypack.dev/sanctuary").then(l => { S=l.default; });
 import("https://cdn.skypack.dev/fluture-sanctuary-types").then(l => { S = S.create({checkTypes: true, env: S.env.concat(l.env)}); });
 let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
 ```
-
-For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
 
 ## Libraries - little helpers
 
