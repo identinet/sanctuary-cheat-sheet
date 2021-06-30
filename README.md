@@ -548,10 +548,10 @@ To quickly get a local [Sanctuary][sanctuary] REPL, open the developer tools in 
 For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
 
 ```bash
-deno relp --eval 'import {S, F} from "https://deno.land/x/sanctuary_cheat_sheet/repl.js"'
+deno repl --eval 'import {S, F} from "https://deno.land/x/sanctuary_cheat_sheet@v0.0.1/repl.js"'
 ```
 
-#### Older deno <= 1.11.2 version
+#### Older deno <= 1.11.3 version
 
 ```bash
 deno
