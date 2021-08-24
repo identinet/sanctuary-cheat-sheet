@@ -7,8 +7,13 @@ The goal of this cheat sheet is to make it easy for newcomers and experienced de
 WARNING: the information in this cheat sheet is by no means a comprehensive collection of all the library functions and types. Nor are the examples the only or even the best way of how to use them in your code. Keep this in mind and also dive into [other resouces](#resources---additional-things-that-might-be-helpful). I highly recommend reading [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/) and the [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/).
 
 <!-- Table of Contents generated with: https://github.com/ycd/toc -->
+<!-- mdtoc -p README.md -->
 <!--toc-->
 - [Sanctuary Cheat Sheet](#sanctuary-cheat-sheet)
+    * [Read-Eval-Print-Loop - try out Sanctuary](#read-eval-print-loop---try-out-sanctuary)
+        * [Web](#web)
+        * [Local browser](#local-browser)
+        * [Deno](#deno)
     * [Function definition](#function-definition)
         * [Define parameters](#define-parameters)
         * [Define processing steps](#define-processing-steps)
@@ -35,14 +40,33 @@ WARNING: the information in this cheat sheet is by no means a comprehensive coll
         * [Either - the better alternative to throw Error](#either---the-better-alternative-to-throw-error)
         * [bimap - mapping over two values (potential failure)](#bimap---mapping-over-two-values-potential-failure)
     * [Pair - storing key-value pairs](#pair---storing-key-value-pairs)
-    * [Read-Eval-Print-Loop - try out Sanctuary](#read-eval-print-loop---try-out-sanctuary)
-        * [Web](#web)
-        * [Local browser](#local-browser)
-        * [Deno](#deno)
     * [Libraries - little helpers](#libraries---little-helpers)
     * [Resources - additional things that might be helpful](#resources---additional-things-that-might-be-helpful)
 
 <!-- tocstop -->
+
+## Read-Eval-Print-Loop - try out Sanctuary
+
+### Web
+
+A web-based [Sanctuary][sanctuary]-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green;">green</span> box.
+
+### Local browser
+
+To quickly get a local [Sanctuary][sanctuary] and [Fluture][fluture] REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) and execute this instruction:
+
+```javascipt
+let S; let $; let F;
+import("https://deno.land/x/sanctuary_cheat_sheet@v0.0.3/repl.js").then(l => { S=l.S; F=l.F; $=l.$});
+```
+
+### Deno
+
+To quickly get a local [Sanctuary][sanctuary] and [Fluture][fluture] REPL, run this command:
+
+```bash
+deno repl --eval 'import {S, $, F} from "https://deno.land/x/sanctuary_cheat_sheet@v0.0.3/repl.js"'
+```
 
 ## Function definition
 
@@ -533,28 +557,6 @@ S.show(S.map(x => x * 2)(p))
 
 S.show(S.mapLeft(x => "accountnumber")(p))
 // result: Pair ("accountnumber") (1)
-```
-
-## Read-Eval-Print-Loop - try out Sanctuary
-
-### Web
-
-A web-based [Sanctuary][sanctuary]-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green;">green</span> box.
-
-### Local browser
-
-To quickly get a local [Sanctuary][sanctuary] and [Fluture][fluture] REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) and execute this instruction:
-
-```javascipt
-let S; let F; import("https://deno.land/x/sanctuary_cheat_sheet@v0.0.2/repl.js").then(l => { S=l.S; F=l.F; });
-```
-
-### Deno
-
-To quickly get a local [Sanctuary][sanctuary] and [Fluture][fluture] REPL, run this command:
-
-```bash
-deno repl --eval 'import {S, F} from "https://deno.land/x/sanctuary_cheat_sheet@v0.0.2/repl.js"'
 ```
 
 ## Libraries - little helpers
