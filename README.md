@@ -541,31 +541,34 @@ S.show(S.mapLeft(x => "accountnumber")(p))
 
 A web-based [Sanctuary][sanctuary]-only REPL is available [online](https://sanctuary.js.org/#section:overview), start typing in the <span style="color: green;">green</span> box.
 
-### Local browser or deno
+### Local browser
 
-To quickly get a local [Sanctuary][sanctuary] REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) or install [Deno](https://deno.land/) and run this command:
-
-For [Deno](https://deno.land/) there's unfortunately no faster option yet, see [[Feature Request] CLI option for REPL imports](https://github.com/denoland/deno/issues/7425).
-
-```bash
-deno repl --eval 'import {S, F} from "https://deno.land/x/sanctuary_cheat_sheet@v0.0.1/repl.js"'
-```
-
-#### Older deno <= 1.11.3 version
-
-```bash
-deno
-```
-
-Then paste these instructions in the REPL to import [Sanctuary][sanctuary] and [Fluture](https://github.com/fluture-js/Fluture):
+To quickly get a local [Sanctuary][sanctuary] and [Fluture][fluture] REPL, open the developer tools in your browser (keyboard shortcut `Ctrl-Shift-i`) and execute this instruction:
 
 ```javascipt
-// Sanctuary only:
-let S; import("https://cdn.skypack.dev/sanctuary").then(l => { S=l.default; });
+let S; let F; import("https://deno.land/x/sanctuary_cheat_sheet@v0.0.2/repl.js").then(l => { S=l.S; F=l.F; });
+```
 
-// Fluture + Sanctuary integration:
-import("https://cdn.skypack.dev/fluture-sanctuary-types").then(l => { S = S.create({checkTypes: true, env: S.env.concat(l.env)}); });
-let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
+### NodeJS
+
+To quickly get a local [Sanctuary][sanctuary] and [Fluture][fluture] REPL, run this command:
+
+```bash
+node
+```
+
+```javascipt
+let S; let F; import("https://deno.land/x/sanctuary_cheat_sheet@v0.0.2/repl.js").then(l => { S=l.S; F=l.F; });
+```
+
+And execute this instruction:
+
+### deno
+
+To quickly get a local [Sanctuary][sanctuary] and [Fluture][fluture] REPL, run this command:
+
+```bash
+deno repl --eval 'import {S, F} from "https://deno.land/x/sanctuary_cheat_sheet@v0.0.2/repl.js"'
 ```
 
 ## Libraries - little helpers
@@ -597,6 +600,7 @@ let F; import("https://cdn.skypack.dev/fluture").then(l => { F=l; });
 [filter]: https://sanctuary.js.org/#filter
 [fork]: https://github.com/fluture-js/Fluture#fork
 [functor]: https://github.com/sanctuary-js/sanctuary-type-classes#type-class-hierarchy
+[fluture]: https://github.com/fluture-js/Fluture
 [future]: https://github.com/fluture-js/Fluture#future
 [ifelse]: https://sanctuary.js.org/#ifElse
 [join]: https://sanctuary.js.org/#join

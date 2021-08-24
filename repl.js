@@ -1,5 +1,5 @@
 #!/usr/bin/env -S deno
-import * as sanctuary from "https://cdn.skypack.dev/sanctuary";
+import sanctuary from "https://cdn.skypack.dev/sanctuary";
 import { env as flutureEnv } from "https://cdn.skypack.dev/fluture-sanctuary-types";
 export const S = sanctuary.create({
   checkTypes: true,
