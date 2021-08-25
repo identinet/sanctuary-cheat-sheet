@@ -571,12 +571,16 @@ S.show(S.mapLeft(x => "accountnumber")(p))
 ## Resources - additional things that might be helpful
 
 - Sanctuary library introduction: [Sanctuary, Programming Safely in an Uncertain World](https://www.youtube.com/watch?v=a2astdDbOjk)
+- Sanctuary Abstract Data Type Overview: [Sanctuary ADT Matrix](https://github.com/dotnetCarpenter/sanctuary-adt-matrix)
 - Introduction to functional programming: [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
 - Fantasy Land Spec walkthrough: [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/)
 - Functional programming video tutorial series: [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/lessons/javascript-you-ve-been-using-monads)
+- Functional Design Patterns: [Functional Design Patterns - Scott Wlashin](https://www.youtube.com/watch?v=ucnWLfBA1dc)
+- Functional Domain Modeling: [Domain Modeling Made Functional - Scott Wlashin](https://www.youtube.com/watch?v=Up7LcbGZFuo)
 - Functional programming book: [Prof. Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
 - Functional programming book: [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
 - Functional programming book: [Functional-Light JavaScript](https://github.com/getify/functional-light-js)
+- JavaScript Functional Programming YouTube Channel: [Fun Fun Function](https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q)
 
 [attemptp]: https://github.com/fluture-js/Fluture#attemptp
 [bimap]: https://sanctuary.js.org/#bimap
