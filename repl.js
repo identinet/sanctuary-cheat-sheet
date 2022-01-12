@@ -1,26 +1,26 @@
 #!/usr/bin/env -S deno run --allow-env=NODE_ENV
 import sanctuary from "https://cdn.skypack.dev/sanctuary";
-import $ from "https://cdn.skypack.dev/sanctuary-def";
+import _$ from "https://cdn.skypack.dev/sanctuary-def";
 import { env as flutureEnv } from "https://cdn.skypack.dev/fluture-sanctuary-types";
 
-export const PromiseType = $.NullaryType("Promise")(
+export const PromiseType = _$.NullaryType("Promise")(
   "https://github.com/identinet/identinet#Promise",
 )([])((x) => S.type(x).name === "Promise");
 
-const env = $.env.concat(flutureEnv).concat([PromiseType]);
+const env = _$.env.concat(flutureEnv).concat([PromiseType]);
+
+export const $ = _$;
 
 export const S = sanctuary.create({
-  checkTypes:
-    (typeof process !== "undefined" && process.env &&
-      process.env.NODE_ENV !== "production") ||
+  checkTypes: (typeof process !== "undefined" && process.env &&
+    process.env.NODE_ENV !== "production") ||
     (typeof Deno !== "undefined" && Deno.env.get("NODE_ENV") !== "production"),
   env,
 });
 
-export const def = $.create({
-  checkTypes:
-    (typeof process !== "undefined" && process.env &&
-      process.env.NODE_ENV !== "production") ||
+export const def = _$.create({
+  checkTypes: (typeof process !== "undefined" && process.env &&
+    process.env.NODE_ENV !== "production") ||
     (typeof Deno !== "undefined" && Deno.env.get("NODE_ENV") !== "production"),
   env,
 });
