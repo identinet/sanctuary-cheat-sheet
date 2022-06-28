@@ -12,8 +12,7 @@ or even the best way of how to use them in your code. Keep this in mind and also
 dive into
 [other resouces](#resources---additional-things-that-might-be-helpful). I highly
 recommend reading
-[Things I wish someone had explained about Functional
-Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
+[Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
 and the
 [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/).
 
@@ -726,27 +725,46 @@ S.show(S.mapLeft(x => "accountnumber")(p))
 ## Resources - additional things that might be helpful
 
 - Sanctuary library introduction:
-  [Sanctuary, Programming Safely in an Uncertain
-  World](https://www.youtube.com/watch?v=a2astdDbOjk)
+  [Sanctuary, Programming Safely in an Uncertain World](https://www.youtube.com/watch?v=a2astdDbOjk)
 - Sanctuary Abstract Data Type Overview:
   [Sanctuary ADT Matrix](https://github.com/dotnetCarpenter/sanctuary-adt-matrix)
 - Introduction to functional programming:
-  [Things I wish someone had explained about Functional
-  Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
+  [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
+  1. [Algebraic structures](https://jrsinclair.com/articles/2019/algebraic-structures-what-i-wish-someone-had-explained-about-functional-programming/)
+  2. [Type classes](https://jrsinclair.com/articles/2019/type-classes-what-i-wish-someone-had-explained-about-functional-programming/)
+  3. [Algebraic data types](https://jrsinclair.com/articles/2019/algebraic-data-types-what-i-wish-someone-had-explained-about-functional-programming/)
 - Fantasy Land Spec walkthrough:
   [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/)
+  1. [Daggy](http://www.tomharding.me/2017/03/03/fantas-eel-and-specification/)
+  2. [Type Signatures](http://www.tomharding.me/2017/03/08/fantas-eel-and-specification-2/)
+  3. [Setoid](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-3/)
+  4. [Ord](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-3.5/)
+  5. [Semigroup](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-4/)
+  6. [Monoid](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-5/)
+  7. [Functor](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-6/)
+  8. [Contravariant](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-7/)
+  9. [Apply](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-8/)
+  10. [Applicative](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-9/)
+  11. [Alt, Plus, and Alternative](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-10/)
+  12. [Foldable](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-11/)
+  13. [Traversable](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-12/)
+  14. [Chain](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-13/)
+  15. [ChainRec](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-14/)
+  16. [Monad](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-15/)
+  17. [Extend](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-16/)
+  18. [Comonad](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-17/)
+  19. [Bifunctor and Profunctor](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-18/)
+  20. [Semigroupoid and Category](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-19/)
 - Functional programming video tutorial series:
-  [Professor Frisby Introduces Composable Functional
-  JavaScript](https://egghead.io/lessons/javascript-you-ve-been-using-monads)
+  [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/lessons/javascript-you-ve-been-using-monads)
 - Functional Design Patterns:
-  [Functional Design Patterns - Scott
-  Wlashin](https://www.youtube.com/watch?v=ucnWLfBA1dc)
+  [Functional Design Patterns - Scott Wlashin](https://www.youtube.com/watch?v=ucnWLfBA1dc)
+- Functional programming pattern Monad explained in 100sec:
+  [What is a Monad?](https://www.youtube.com/watch?v=VgA4wCaxp-Q)
 - Functional Domain Modeling:
-  [Domain Modeling Made Functional - Scott
-  Wlashin](https://www.youtube.com/watch?v=Up7LcbGZFuo)
+  [Domain Modeling Made Functional - Scott Wlashin](https://www.youtube.com/watch?v=Up7LcbGZFuo)
 - Functional programming book:
-  [Prof. Frisby's Mostly Adequate Guide to Functional
-  Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
+  [Prof. Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
 - Functional programming book:
   [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
 - Functional programming book:
