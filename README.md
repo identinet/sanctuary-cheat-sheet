@@ -771,6 +771,8 @@ S.show(S.mapLeft(x => "accountnumber")(p))
   [Functional-Light JavaScript](https://github.com/getify/functional-light-js)
 - JavaScript Functional Programming YouTube Channel:
   [Fun Fun Function](https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q)
+- Awesome List Functional Programming in JavaScript:
+  [Awsome FP JS](https://github.com/stoeffel/awesome-fp-js)
 
 [attemptp]: https://github.com/fluture-js/Fluture#attemptp
 [bimap]: https://sanctuary.js.org/#bimap
