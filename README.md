@@ -10,63 +10,55 @@ WARNING: the information in this cheat sheet is by no means a comprehensive
 collection of all the library functions and types. Nor are the examples the only
 or even the best way of how to use them in your code. Keep this in mind and also
 dive into
-[other resouces](#resources---additional-things-that-might-be-helpful). I highly
-recommend reading
+[other resources](#resources---additional-things-that-might-be-helpful). I
+highly recommend reading
 [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
 and the
 [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/).
 
-<!-- Table of Contents generated with: https://github.com/ycd/toc -->
-<!-- mdtoc -p README.md -->
-<!--toc-->
+<!-- Table of Contents generated with:
+!deno run --unstable --allow-read --allow-write https://deno.land/x/remark_format_cli@v0.1.0/remark-format.js %
+-->
 
-- [Sanctuary Cheat Sheet](#sanctuary-cheat-sheet)
-  - [Read-Eval-Print-Loop - try out
-    Sanctuary](#read-eval-print-loop---try-out-sanctuary)
-    - [Web](#web)
-    - [Local browser](#local-browser)
-    - [Deno](#deno)
-  - [Function definition](#function-definition)
-    - [Define parameters](#define-parameters)
-    - [Define processing steps](#define-processing-steps)
-    - [Define function signature with types](#define-function-signature-with-types)
-  - [Type definition - create your own functional
-    types](#type-definition---create-your-own-functional-types)
-  - [Piping - connecting function outputs to function inputs and avoid
-    intermediate
-    variables](#piping---connecting-function-outputs-to-function-inputs-and-avoid-intermediate-variables)
-  - [Print debugging - inspecting intermediate
-    values](#print-debugging---inspecting-intermediate-values)
-  - [Branching - handling if-else cases](#branching---handling-if-else-cases)
-  - [Promises - back to the Future](#promises---back-to-the-future)
-    - [Integration with Sanctuary](#integration-with-sanctuary)
-    - [Basic setup](#basic-setup)
-    - [Promises - working with Promise-returning
-      functions](#promises---working-with-promise-returning-functions)
-    - [Processing - the Future is yet to come](#processing---the-future-is-yet-to-come)
-    - [Parallel Futures](#parallel-futures)
-    - [Stopping the Future](#stopping-the-future)
-  - [map or chain?](#map-or-chain)
-    - [map - transform a list of values](#map---transform-a-list-of-values)
-    - [chain - perform type-aware transformation of
-      values](#chain---perform-type-aware-transformation-of-values)
-    - [join - combine multiple objects of the same
-      type](#join---combine-multiple-objects-of-the-same-type)
-  - [filter - remove unneeded values](#filter---remove-unneeded-values)
-  - [reduce - accumulate values](#reduce---accumulate-values)
-  - [Error handling](#error-handling)
-    - [Maybe - the better null/NaN/undefined return
-      value](#maybe---the-better-nullnanundefined-return-value)
-    - [Either - the better alternative to throw
-      Error](#either---the-better-alternative-to-throw-error)
-    - [bimap - mapping over two values (potential
-      failure)](#bimap---mapping-over-two-values-potential-failure)
-  - [Pair - storing key-value pairs](#pair---storing-key-value-pairs)
-  - [Libraries - little helpers](#libraries---little-helpers)
-  - [Resources - additional things that might be
-    helpful](#resources---additional-things-that-might-be-helpful)
+## Contents
 
-<!-- tocstop -->
+1. [Read-Eval-Print-Loop - try out Sanctuary](#read-eval-print-loop---try-out-sanctuary)
+   1. [Web](#web)
+   2. [Local browser](#local-browser)
+   3. [Deno](#deno)
+2. [Function definition](#function-definition)
+   1. [Define parameters](#define-parameters)
+   2. [Define processing steps](#define-processing-steps)
+   3. [Define function signature with types](#define-function-signature-with-types)
+3. [Type definition - create your own functional types](#type-definition---create-your-own-functional-types)
+4. [Piping - connecting function outputs to function inputs and avoid intermediate variables](#piping---connecting-function-outputs-to-function-inputs-and-avoid-intermediate-variables)
+5. [Print debugging - inspecting intermediate values](#print-debugging---inspecting-intermediate-values)
+6. [Branching - handling if-else cases](#branching---handling-if-else-cases)
+7. [Promises - back to the Future](#promises---back-to-the-future)
+   1. [Integration with Sanctuary](#integration-with-sanctuary)
+   2. [Basic setup](#basic-setup)
+   3. [Promises - working with Promise-returning functions](#promises---working-with-promise-returning-functions)
+   4. [Processing - the Future is yet to come](#processing---the-future-is-yet-to-come)
+   5. [Parallel Futures](#parallel-futures)
+   6. [Stopping the Future](#stopping-the-future)
+8. [map or chain?](#map-or-chain)
+   1. [map - transform a list of values](#map---transform-a-list-of-values)
+   2. [chain - perform type-aware transformation of values](#chain---perform-type-aware-transformation-of-values)
+   3. [join - combine multiple objects of the same type](#join---combine-multiple-objects-of-the-same-type)
+9. [filter - remove unneeded values](#filter---remove-unneeded-values)
+10. [reduce - accumulate values](#reduce---accumulate-values)
+11. [Error handling](#error-handling)
+    1. [Maybe - the better null/NaN/undefined return value](#maybe---the-better-nullnanundefined-return-value)
+    2. [Either - the better alternative to throw Error](#either---the-better-alternative-to-throw-error)
+    3. [bimap - mapping over two values (potential failure)](#bimap---mapping-over-two-values-potential-failure)
+12. [Pair - storing key-value pairs](#pair---storing-key-value-pairs)
+13. [Libraries - little helpers](#libraries---little-helpers)
+14. [Resources - additional things that might be helpful](#resources---additional-things-that-might-be-helpful)
+    1. [Sanctuary](#sanctuary)
+    2. [Fantasy Land Spec / Theory](#fantasy-land-spec--theory)
+    3. [Video Tutorials](#video-tutorials)
+    4. [Books](#books)
+    5. [Miscellaneous](#miscellaneous)
 
 ## Read-Eval-Print-Loop - try out Sanctuary
 
@@ -101,8 +93,8 @@ deno repl --eval 'import {S, def, F} from "https://deno.land/x/sanctuary_cheat_s
 There are three aspects to defining functions:
 
 1. Define the parameters - one after the other
-1. Define the processing steps
-1. Define the function signature with types
+2. Define the processing steps
+3. Define the function signature with types
 
 ### Define parameters
 
@@ -134,7 +126,7 @@ const myfunction = (parameter1) =>
   S.pipe([
     // first processing step
     doA,
-    // second procesing step
+    // second processing step
     doB,
     // ...
     doC,
@@ -715,16 +707,21 @@ S.show(S.mapLeft(x => "accountnumber")(p))
 
 ## Resources - additional things that might be helpful
 
+### Sanctuary
+
 - Sanctuary library introduction:
   [Sanctuary, Programming Safely in an Uncertain World](https://www.youtube.com/watch?v=a2astdDbOjk)
 - Sanctuary Abstract Data Type Overview:
   [Sanctuary ADT Matrix](https://github.com/dotnetCarpenter/sanctuary-adt-matrix)
+
+### Fantasy Land Spec
+
 - Introduction to functional programming:
   [Things I wish someone had explained about Functional Programming](https://jrsinclair.com/articles/2019/what-i-wish-someone-had-explained-about-functional-programming/)
   1. [Algebraic structures](https://jrsinclair.com/articles/2019/algebraic-structures-what-i-wish-someone-had-explained-about-functional-programming/)
   2. [Type classes](https://jrsinclair.com/articles/2019/type-classes-what-i-wish-someone-had-explained-about-functional-programming/)
   3. [Algebraic data types](https://jrsinclair.com/articles/2019/algebraic-data-types-what-i-wish-someone-had-explained-about-functional-programming/)
-- Fantasy Land Spec walkthrough:
+- Fantasy Land Spec walk through:
   [Fantas, Eel, and Specification](http://www.tomharding.me/fantasy-land/)
   1. [Daggy](http://www.tomharding.me/2017/03/03/fantas-eel-and-specification/)
   2. [Type Signatures](http://www.tomharding.me/2017/03/08/fantas-eel-and-specification-2/)
@@ -746,6 +743,9 @@ S.show(S.mapLeft(x => "accountnumber")(p))
   18. [Comonad](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-17/)
   19. [Bifunctor and Profunctor](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-18/)
   20. [Semigroupoid and Category](http://www.tomharding.me/2017/03/09/fantas-eel-and-specification-19/)
+
+### Video Tutorials
+
 - Functional programming video tutorial series:
   [Professor Frisby Introduces Composable Functional JavaScript](https://egghead.io/lessons/javascript-you-ve-been-using-monads)
 - Functional Design Patterns:
@@ -754,14 +754,18 @@ S.show(S.mapLeft(x => "accountnumber")(p))
   [What is a Monad?](https://www.youtube.com/watch?v=VgA4wCaxp-Q)
 - Functional Domain Modeling:
   [Domain Modeling Made Functional - Scott Wlashin](https://www.youtube.com/watch?v=Up7LcbGZFuo)
-- Functional programming book:
-  [Prof. Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
-- Functional programming book:
-  [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
-- Functional programming book:
-  [Functional-Light JavaScript](https://github.com/getify/functional-light-js)
 - JavaScript Functional Programming YouTube Channel:
   [Fun Fun Function](https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q)
+
+### Books
+
+- [Prof. Frisby's Mostly Adequate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
+- [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc)
+- [Functional-Light JavaScript](https://github.com/getify/functional-light-js)
+- [Category Theory for Programmers](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)
+
+### Miscellaneous
+
 - Awesome List Functional Programming in JavaScript:
   [Awsome FP JS](https://github.com/stoeffel/awesome-fp-js)
 
