@@ -115,11 +115,9 @@ Fortunately, JavaScript's arrow functions make it really easy to create curried
 functions:
 
 ```javascript
-const myfunction = (parameter1) =>
-  (parameter2) =>
-    (parameter3) => {
-      // the function body
-    };
+const myfunction = (parameter1) => (parameter2) => (parameter3) => {
+  // the function body
+};
 ```
 
 ### Define processing steps
@@ -206,29 +204,25 @@ values of the function calls are stored in variables are passed again to other
 function calls. It might look something like this:
 
 ```javascript
-const myfunction = (parameter1) =>
-  (parameter2) =>
-    (parameter3) => {
-      const resA = doA(parameter1);
-      const resB = doB(parameter2)(resA);
-      const resC = doC(parameter3)(resB);
-      return resC;
-    };
+const myfunction = (parameter1) => (parameter2) => (parameter3) => {
+  const resA = doA(parameter1);
+  const resB = doB(parameter2)(resA);
+  const resC = doC(parameter3)(resB);
+  return resC;
+};
 ```
 
 This could be optimized with the [`pipe`][pipe] function by removing the
 variables and feeding the intermediate results directly into the next function:
 
 ```javascript
-const myfunction = (parameter1) =>
-  (parameter2) =>
-    (parameter3) =>
-      S.pipe([
-        doA,
-        // output of doA is piped as input into doB
-        doB(parameter2),
-        doC(parameter3),
-      ])(parameter1);
+const myfunction = (parameter1) => (parameter2) => (parameter3) =>
+  S.pipe([
+    doA,
+    // output of doA is piped as input into doB
+    doB(parameter2),
+    doC(parameter3),
+  ])(parameter1);
 ```
 
 ## Print debugging - inspecting intermediate values
@@ -252,11 +246,10 @@ Solution, define a `log` function that prints a message and the received value
 and returns the value. Then add the `log` function between `doA` and `doB`:
 
 ```javascript
-const log = (msg) =>
-  (value) => {
-    console.log(msg, value);
-    return value;
-  };
+const log = (msg) => (value) => {
+  console.log(msg, value);
+  return value;
+};
 
 const myfunction = S.pipe([
   doA,
@@ -636,13 +629,12 @@ contains additional data for processing and potentially recovering from the
 error while [`Nothing`][nothing] contains no data.
 
 ```javascript
-const myDiv = (num) =>
-  (divider) => {
-    if (divider === 0) {
-      return S.Left("Division by zero.");
-    }
-    return S.Right(num / divider);
-  };
+const myDiv = (num) => (divider) => {
+  if (divider === 0) {
+    return S.Left("Division by zero.");
+  }
+  return S.Right(num / divider);
+};
 
 S.show(
   S.map(
@@ -667,13 +659,12 @@ When there are multiple subtypes to deal with like [`Left`][left] and
 [`bimap`][bimap] provides this feature so we can begin handling the failure:
 
 ```javascript
-const myDiv = (num) =>
-  (divider) => {
-    if (divider === 0) {
-      return S.Left("Division by zero.");
-    }
-    return S.Right(num / divider);
-  };
+const myDiv = (num) => (divider) => {
+  if (divider === 0) {
+    return S.Left("Division by zero.");
+  }
+  return S.Right(num / divider);
+};
 
 S.show(
   S.map(
