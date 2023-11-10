@@ -358,10 +358,10 @@ The main question is how do we deal with Futures in [`pipe`][pipe]. There are
 two important cases to keep in mind: [map or chain?](#map-or-chain). Either we
 process the Future with [`map`][map] (2) - in this case no knowledge about the
 Future is required by the function that receives the value - or with
-[`map`][map] (3) - in this case the Future is consumed and a new future needs to
+[`chain`][chain] (3) - in this case the Future is consumed and a new future needs to
 be returned by the function.
 
-If we forget to use [`map`][map] or [`map`][map] in a function call (1), the
+If we forget to use [`map`][map] or [`chain`][chain] in a function call (1), the
 function receives the unfinished Future. It's like acting on a
 [`Promise`][promise] without calling `.then()` or `await` on it.
 
